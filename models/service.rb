@@ -7,3 +7,4 @@ class Service
         @monto_mensual = monto_mensual
         @fecha_pago = fecha_pago
     end
+end
