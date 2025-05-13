@@ -1,0 +1,9 @@
+services:
+  app:
+    build:
+      context: .
+    command: bundle exec rackup -o 0.0.0.0 -p 8000 -I . --debug --require sinatra/reloader
+    ports:
+      - '8000:8000'
+    volumes:
+      - .:/app
