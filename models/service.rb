@@ -1,6 +1,4 @@
-class Service
-    attr_reader :id_service, :nom_service, :monto_mensual, :fecha_pago
-
+class Service < ActiveRecord::Base
     def initialize(id_service, nom_service, monto_mensual, fecha_pago)
         @id_service = id_service
         @nom_service = nom_service
