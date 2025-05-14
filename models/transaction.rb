@@ -2,7 +2,7 @@ class Transaction < ActiveRecord::Base
   self.primary_key = 'num_operation'
 
   enum type: {
-    TRASFERENCIA_RECIBIDA: 0,TRANSFERERENCIA_ENVIADA: 1,
+    TRASFERENCIA_RECIBIDA: 0,
     TRANSFERERENCIA_ENVIADA: 1,
     SALARIO: 2,
     DEVOLUCION: 3,
