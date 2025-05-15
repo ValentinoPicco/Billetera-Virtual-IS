@@ -10,13 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_14_094404) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_14_190224) do
   create_table "Card", force: :cascade do |t|
     t.integer "nro_cuenta"
     t.integer "cvv"
     t.string "fecha_creacion"
     t.string "fecha_vto"
     t.string "nombre_titular"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "accounts", id: false, force: :cascade do |t|
+    t.integer "cvu", null: false
+    t.string "alias"
+    t.decimal "saldo_total", precision: 10, scale: 2
+    t.date "fecha_creacion"
+    t.string "password", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

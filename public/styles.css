@@ -1,0 +1,8 @@
+body {
+    background-color: orange;
+}
+
+h1{
+    height: max-content;
+    color: red;
+}
