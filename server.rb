@@ -29,4 +29,9 @@ class App < Sinatra::Application
   get '/register' do
     erb :register
   end
+
+  get '/home' do
+    erb :home
+  end
+  
 end

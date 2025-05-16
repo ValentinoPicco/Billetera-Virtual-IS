@@ -33,7 +33,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    max-height: 140px;
   }
+  
   
 
   .content {
@@ -60,6 +62,7 @@
   .login h2 {
     font-weight: 600;
     margin-bottom: 20px;
+    color: #222;
   }
   
   .login form {
@@ -123,6 +126,12 @@
     object-fit: contain;
     margin-bottom: 10px;
   }
+
+  .logo:hover {
+    opacity: 0.8;
+    transition: opacity 0.3s;
+  }
+  
   
   .register a {
     color: #222;
@@ -197,3 +206,105 @@
     }
   }
   
+
+
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 8px;
+}
+    
+
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px;
+    min-width: 768px;
+}
+    
+
+.div1 {
+    grid-column-start: 1;
+    grid-row-start: 1;
+    background-color: #f8e1ba;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.div2 {
+    grid-column-start: 1;
+    grid-row-start: 2;
+    background-color: #f8e1ba;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.div3 {
+    grid-row: span 2 / span 2;
+    grid-column-start: 2;
+    grid-row-start: 1;
+    background-color: #f8e1ba;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+        
+
+.menu {
+    display: flex;
+    flex-grow: 1;
+    margin: 0 auto;
+    padding-block: 20px;
+}
+
+.movimiento {
+    text-align: start;
+    font-family:'Times New Roman', Times, serif;
+    justify-content: center;
+    padding-top: 30px;
+}
+
+.movimientos p {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  .monto.positivo {
+    color: green;
+    font-weight: bold;
+    margin-left: 10px;
+  }
+  
+  .monto.negativo {
+    color: red;
+    font-weight: bold;
+    margin-left: 10px;
+  }
+  
+
+  .perfil {
+
+  }
+  
+  .perfil img {
+    width: 100px;
+    height:100%;
+  }
+
+  .dinero {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .dinero p {
+    display: block;
+  }
