@@ -44,8 +44,8 @@ El seguimiento del desarrollo, incluyendo historias de usuario, bugs y funcional
 ## 🖼️ Recursos del proyecto
 
 - 📄 [Diagrama de Clases](diagramadeclases_oranpay.jpg)
-- 🖌️ [Diseño UI en Figma](https://www.figma.com/...)
-- 🧠 [Tablero Miro](https://miro.com/...)
+- 🖌️ [Diseño UI en Figma](https://www.figma.com/design/EYfNv2UwfJVbxNCNlShlxL/Proyecto-IS?node-id=9-6&p=f&t=8PynLV5sQ9Vti0n3-0)
+- 🧠 [Tablero Miro](https://miro.com/app/board/uXjVIGhOz2U=/)
 
 ---
 
@@ -57,9 +57,3 @@ El seguimiento del desarrollo, incluyendo historias de usuario, bugs y funcional
 - Miani Francisco
 - Picco Valentino  
 
----
-
-## 📄 Licencia
-
-Este proyecto es de uso académico.  
-Puedes reutilizar el código bajo los términos de la [MIT License](LICENSE).
