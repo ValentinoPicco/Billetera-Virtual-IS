@@ -1,7 +1,7 @@
 class Transaction < ActiveRecord::Base
 
   enum transaction_type: {
-    TRASFERENCIA_RECIBIDA: 0,
+    TRANSFERENCIA_RECIBIDA: 0,
     TRANSFERERENCIA_ENVIADA: 1,
     SALARIO: 2,
     DEVOLUCION: 3,
@@ -11,5 +11,8 @@ class Transaction < ActiveRecord::Base
     COMPRA: 7,
     RETIRO: 8
   }
+
+  #before create
+  #after create
 
 end
