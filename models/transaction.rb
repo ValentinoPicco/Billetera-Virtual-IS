@@ -1,5 +1,4 @@
 class Transaction < ActiveRecord::Base
-  self.primary_key = 'num_operation'
 
   enum transaction_type: {
     TRASFERENCIA_RECIBIDA: 0,

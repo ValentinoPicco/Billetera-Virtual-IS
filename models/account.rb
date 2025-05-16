@@ -1,6 +1,4 @@
 class Account < ActiveRecord::Base
-
-  self.primary_key = 'cvu'
-
+    belongs_to :user
 end
 
