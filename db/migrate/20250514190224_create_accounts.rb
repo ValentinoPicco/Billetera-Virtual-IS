@@ -6,7 +6,7 @@ class CreateAccounts < ActiveRecord::Migration[7.0]
       t.decimal :saldo_total, precision: 10, scale: 2 
       t.date :fecha_creacion
       t.string :password, null: false
-
+      t.references :user, foreign_key: true
       t.timestamps
     end
   end
