@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_14_190224) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_17_020612) do
+  create_table "account_contacts", force: :cascade do |t|
+    t.integer "account_id", null: false
+    t.integer "contact_account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "contact_account_id"], name: "index_account_contacts_on_account_id_and_contact_account_id", unique: true
+    t.index ["account_id"], name: "index_account_contacts_on_account_id"
+    t.index ["contact_account_id"], name: "index_account_contacts_on_contact_account_id"
+  end
+
   create_table "accounts", force: :cascade do |t|
     t.integer "user_id"
     t.integer "cvu", null: false
@@ -68,6 +78,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_14_190224) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "account_contacts", "accounts"
+  add_foreign_key "account_contacts", "accounts", column: "contact_account_id"
   add_foreign_key "accounts", "users"
   add_foreign_key "cards", "accounts", column: "account_holder_id"
   add_foreign_key "transactions", "accounts", column: "source_account_id"
