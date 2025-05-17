@@ -1,7 +1,8 @@
-class CreateCard < ActiveRecord::Migration[7.0]
+class CreateCard < ActiveRecord::Migration[8.0]
   def change
-    create_table :Card do |t|
-      t.integer :nro_cuenta  
+    create_table :card do |t|
+      t.integer :nro_tarjeta
+      t.references :account_holder, foreign_key: { to_table: :accounts }
       t.integer :cvv
       t.string :fecha_creacion
       t.string :fecha_vto
