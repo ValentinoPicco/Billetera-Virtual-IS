@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_14_094404) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_14_190224) do
   create_table "Card", force: :cascade do |t|
     t.integer "nro_cuenta"
     t.integer "cvv"
@@ -21,6 +21,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_14_094404) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "accounts", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "cvu", null: false
+    t.string "alias"
+    t.decimal "saldo_total", precision: 10, scale: 2
+    t.date "fecha_creacion"
+    t.string "password", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_accounts_on_user_id"
+  end
+
   create_table "services", force: :cascade do |t|
     t.string "nom_service"
     t.decimal "monto_mensual", precision: 10, scale: 2
@@ -29,14 +41,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_14_094404) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "transactions", id: false, force: :cascade do |t|
+  create_table "transactions", force: :cascade do |t|
     t.integer "num_operation", null: false
+    t.integer "source_account_id", null: false
+    t.integer "destination_account_id"
+    t.integer "value"
     t.date "date"
     t.integer "transaction_type", default: 0, null: false
-    t.decimal "value", precision: 10, scale: 2
     t.string "reason"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["destination_account_id"], name: "index_transactions_on_destination_account_id"
+    t.index ["source_account_id"], name: "index_transactions_on_source_account_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -49,4 +65,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_14_094404) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "accounts", "users"
+  add_foreign_key "transactions", "accounts", column: "destination_account_id"
+  add_foreign_key "transactions", "accounts", column: "source_account_id"
 end
