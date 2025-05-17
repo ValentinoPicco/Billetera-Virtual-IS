@@ -11,16 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2025_05_14_190224) do
-  create_table "Card", force: :cascade do |t|
-    t.integer "nro_cuenta"
-    t.integer "cvv"
-    t.string "fecha_creacion"
-    t.string "fecha_vto"
-    t.string "nombre_titular"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "accounts", force: :cascade do |t|
     t.integer "user_id"
     t.integer "cvu", null: false
@@ -31,6 +21,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_14_190224) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_accounts_on_user_id"
+  end
+
+  create_table "cards", force: :cascade do |t|
+    t.integer "nro_tarjeta"
+    t.integer "account_holder_id"
+    t.integer "cvv"
+    t.string "fecha_creacion"
+    t.string "fecha_vto"
+    t.string "nombre_titular"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_holder_id"], name: "index_cards_on_account_holder_id"
   end
 
   create_table "services", force: :cascade do |t|
@@ -67,6 +69,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_14_190224) do
   end
 
   add_foreign_key "accounts", "users"
+  add_foreign_key "cards", "accounts", column: "account_holder_id"
   add_foreign_key "transactions", "accounts", column: "destination_account_id"
   add_foreign_key "transactions", "accounts", column: "source_account_id"
 end
