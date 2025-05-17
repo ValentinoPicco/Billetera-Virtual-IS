@@ -15,7 +15,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_14_190224) do
     t.integer "user_id"
     t.integer "cvu", null: false
     t.string "alias"
-    t.decimal "saldo_total", precision: 10, scale: 2
+    t.integer "saldo_total"
     t.date "fecha_creacion"
     t.string "password", null: false
     t.datetime "created_at", null: false
@@ -46,15 +46,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_14_190224) do
   create_table "transactions", force: :cascade do |t|
     t.integer "num_operation", null: false
     t.integer "source_account_id", null: false
-    t.integer "destination_account_id"
+    t.integer "target_account_id"
     t.integer "value"
     t.date "date"
     t.integer "transaction_type", default: 0, null: false
     t.string "reason"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["destination_account_id"], name: "index_transactions_on_destination_account_id"
     t.index ["source_account_id"], name: "index_transactions_on_source_account_id"
+    t.index ["target_account_id"], name: "index_transactions_on_target_account_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -70,6 +70,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_14_190224) do
 
   add_foreign_key "accounts", "users"
   add_foreign_key "cards", "accounts", column: "account_holder_id"
-  add_foreign_key "transactions", "accounts", column: "destination_account_id"
   add_foreign_key "transactions", "accounts", column: "source_account_id"
+  add_foreign_key "transactions", "accounts", column: "target_account_id"
 end

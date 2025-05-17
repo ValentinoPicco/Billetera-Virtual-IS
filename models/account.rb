@@ -1,9 +1,14 @@
 class Account < ActiveRecord::Base
+    # Assosiations
+
     belongs_to :user
 
-    has_many :contact_account, class_name: 'Account', foreign_key: :contact_account_id
-    has_many :transaction
-    has_many :source_transacction, class name: 'Transaction', foreing key: source_account_id
-    has_many :destination_transacction, class name: 'Transaction', foreing key: destination_account_id
+    has_one :card
+
+    has_many :account_contacts
+    has_many :contact_accounts, through: :account_contacts, source: :contact_account
+
+    has_many :source_transactions, class_name: 'Transaction', foreign_key: :source_account_id
+    has_many :target_transactions, class_name: 'Transaction', foreign_key: :target_account_id
 end
 
