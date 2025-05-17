@@ -47,7 +47,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_17_020612) do
 
   create_table "services", force: :cascade do |t|
     t.string "nom_service"
-    t.decimal "monto_mensual", precision: 10, scale: 2
+    t.integer "monto_mensual"
     t.date "fecha_pago"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
