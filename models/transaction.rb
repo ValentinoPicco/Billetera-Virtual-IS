@@ -4,16 +4,22 @@ class Transaction < ActiveRecord::Base
   belongs_to :target_account, class_name: 'Account', foreign_key: :target_account_id
 
   # Enum
+  
   enum transaction_type: {
-    TRANSFERENCIA_RECIBIDA: 0,
-    TRANSFERERENCIA_ENVIADA: 1,
-    SALARIO: 2,
-    DEVOLUCION: 3,
-    DEPOSITO: 4,
-    ADELANTO_DE_SUELDO: 5,
-    PAGO_SERVICIO: 6,
-    COMPRA: 7,
-    RETIRO: 8
+    transferencia_recibida: 0,
+    transferencia_enviada: 1,
+    salario: 2,
+    devolucion: 3,
+    deposito: 4,
+    adelanto_de_sueldo: 5,
+    pago_servicio: 6,
+    compra: 7,
+    retiro: 8
   }
 
+  validates :num_operation, presence: true, uniqueness: true
+  validates :source_account, presence: true
+  validates :value, presence: true, numericality: { greater_than: 0 }
+  validates :transaction_type, presence: true
+  validates :date, presence: true
 end

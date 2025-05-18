@@ -10,5 +10,13 @@ class Account < ActiveRecord::Base
 
     has_many :source_transactions, class_name: 'Transaction', foreign_key: :source_account_id
     has_many :target_transactions, class_name: 'Transaction', foreign_key: :target_account_id
+
+  validates :user, presence: true   # debe estar asociado a un usuario
+  validates :cvu, presence: true, uniqueness: true, numericality: { only_integer: true }
+  validates :alias, presence: true, uniqueness: true
+  validates :saldo_total, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
+  validates :fecha_creacion, presence: true
+  validates :password, presence: true, length: { minimum: 6 }
+
 end
 
