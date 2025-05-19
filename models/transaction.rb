@@ -5,17 +5,17 @@ class Transaction < ActiveRecord::Base
 
   # Enum
   
-  enum transaction_type: {
-    transferencia_recibida: 0,
-    transferencia_enviada: 1,
-    salario: 2,
-    devolucion: 3,
-    deposito: 4,
-    adelanto_de_sueldo: 5,
-    pago_servicio: 6,
-    compra: 7,
-    retiro: 8
-  }
+ enum :transaction_type, {
+  transferencia_recibida: 0,
+  transferencia_enviada: 1,
+  salario: 2,
+  devolucion: 3,
+  deposito: 4,
+  adelanto_de_sueldo: 5,
+  pago_servicio: 6,
+  compra: 7,
+  retiro: 8
+}
 
   validates :num_operation, presence: true, uniqueness: true
   validates :source_account, presence: true
