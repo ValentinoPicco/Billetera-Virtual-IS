@@ -15,11 +15,28 @@ class Transaction < ActiveRecord::Base
   pago_servicio: 6,
   compra: 7,
   retiro: 8
-}
+  }
 
   validates :num_operation, presence: true, uniqueness: true
-  validates :source_account, presence: true
   validates :value, presence: true, numericality: { greater_than: 0 }
   validates :transaction_type, presence: true
   validates :date, presence: true
+
+  # llamar Callback que actualiza los saldos
+  after_create :actualizar_saldos
+
+
+  private
+  def actualizar_saldos
+
+    if source_account
+      source_account.update(saldo_total: source_account.saldo_total - value)
+    end
+
+    if target_account
+      target_account.update(saldo_total: target_account.saldo_total + value)
+    end
+  end
+
+
 end
