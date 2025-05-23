@@ -30,9 +30,9 @@ class Transaction < ActiveRecord::Base
   validates :transaction_type, presence: true
   validates :date, presence: true
 
-  # Método de clase para realizar la transferencia de dinero
+  # Método de clase para realizar la transferencia de dinero con el cvu
   # Este método encapsula toda la lógica de negocio y la transacción de DB
-  def self.transfer_money(sender_cvu, receiver_cvu, amount)
+  def self.transfer_money__by_cvu(sender_cvu, receiver_cvu, amount)
 
     # Validar que el monto sea positivo antes de iniciar la transacción
     unless amount > 0
@@ -75,6 +75,46 @@ class Transaction < ActiveRecord::Base
     raise StandardError, "Error de validación: #{e.message}"
   rescue => e
     # Capturar cualquier otro error inesperado
+    raise StandardError, "Error inesperado durante la transferencia: #{e.message}"
+  end
+
+  # Método de clase para realizar la transferencia de dinero usando alias
+  def self.transfer_money_by_alias(sender_alias, receiver_alias, amount)
+    # Validar que el monto sea positivo antes de iniciar la transacción
+    unless amount > 0
+      raise ActiveRecord::RecordInvalid.new(Transaction.new), "El monto debe ser mayor que cero."
+    end
+
+    # Iniciar una transacción para asegurar la atomicidad de las operaciones
+    ActiveRecord::Base.transaction do
+      sender_account = Account.find_by!(alias: sender_alias)
+      receiver_account = Account.find_by!(alias: receiver_alias)
+
+      unless sender_account.saldo_total >= amount
+        raise ActiveRecord::RecordInvalid.new(sender_account), "Saldo insuficiente en la cuenta del remitente."
+      end
+
+      sender_account.update!(saldo_total: sender_account.saldo_total - amount)
+      receiver_account.update!(saldo_total: receiver_account.saldo_total + amount)
+
+      num_operation = SecureRandom.uuid
+
+      transaction = Transaction.create!(
+        num_operation: num_operation,
+        value: amount,
+        transaction_type: :transferencia_enviada,
+        date: Date.current,
+        source_account: sender_account,
+        target_account: receiver_account
+      )
+
+      transaction
+    end
+  rescue ActiveRecord::RecordNotFound => e
+    raise StandardError, "Error de cuenta: #{e.message}"
+  rescue ActiveRecord::RecordInvalid => e
+    raise StandardError, "Error de validación: #{e.message}"
+  rescue => e
     raise StandardError, "Error inesperado durante la transferencia: #{e.message}"
   end
 
