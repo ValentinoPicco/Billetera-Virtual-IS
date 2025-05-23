@@ -70,6 +70,7 @@ GEM
     sqlite3 (2.6.0-arm-linux-gnu)
     sqlite3 (2.6.0-arm-linux-musl)
     sqlite3 (2.6.0-arm64-darwin)
+    sqlite3 (2.6.0-x64-mingw-ucrt)
     sqlite3 (2.6.0-x86-linux-gnu)
     sqlite3 (2.6.0-x86-linux-musl)
     sqlite3 (2.6.0-x86_64-darwin)
@@ -87,6 +88,7 @@ PLATFORMS
   arm-linux-gnu
   arm-linux-musl
   arm64-darwin
+  x64-mingw-ucrt
   x86-linux-gnu
   x86-linux-musl
   x86_64-darwin

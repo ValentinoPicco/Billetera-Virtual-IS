@@ -10,15 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_14_190224) do
-  create_table "Card", force: :cascade do |t|
-    t.integer "nro_cuenta"
+ActiveRecord::Schema[8.0].define(version: 2025_05_17_020612) do
+  create_table "account_contacts", force: :cascade do |t|
+    t.integer "account_id", null: false
+    t.integer "contact_account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "contact_account_id"], name: "index_account_contacts_on_account_id_and_contact_account_id", unique: true
+    t.index ["account_id"], name: "index_account_contacts_on_account_id"
+    t.index ["contact_account_id"], name: "index_account_contacts_on_contact_account_id"
+  end
+
+  create_table "accounts", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "cvu", null: false
+    t.string "alias"
+    t.integer "saldo_total"
+    t.date "fecha_creacion"
+    t.string "password", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_accounts_on_user_id"
+  end
+
+  create_table "cards", force: :cascade do |t|
+    t.integer "nro_tarjeta"
+    t.integer "account_holder_id"
     t.integer "cvv"
     t.string "fecha_creacion"
     t.string "fecha_vto"
     t.string "nombre_titular"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["account_holder_id"], name: "index_cards_on_account_holder_id"
   end
 
   create_table "accounts", id: false, force: :cascade do |t|
@@ -33,20 +57,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_14_190224) do
 
   create_table "services", force: :cascade do |t|
     t.string "nom_service"
-    t.decimal "monto_mensual", precision: 10, scale: 2
+    t.integer "monto_mensual"
     t.date "fecha_pago"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "transactions", id: false, force: :cascade do |t|
+  create_table "transactions", force: :cascade do |t|
     t.integer "num_operation", null: false
+    t.integer "source_account_id", null: false
+    t.integer "target_account_id"
+    t.integer "value"
     t.date "date"
     t.integer "transaction_type", default: 0, null: false
-    t.decimal "value", precision: 10, scale: 2
     t.string "reason"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["source_account_id"], name: "index_transactions_on_source_account_id"
+    t.index ["target_account_id"], name: "index_transactions_on_target_account_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -59,4 +87,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_14_190224) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "account_contacts", "accounts"
+  add_foreign_key "account_contacts", "accounts", column: "contact_account_id"
+  add_foreign_key "accounts", "users"
+  add_foreign_key "cards", "accounts", column: "account_holder_id"
+  add_foreign_key "transactions", "accounts", column: "source_account_id"
+  add_foreign_key "transactions", "accounts", column: "target_account_id"
 end
