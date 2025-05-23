@@ -4,10 +4,7 @@ require 'securerandom' # Necesario para SecureRandom.uuid
 
 class Transaction < ActiveRecord::Base
   # Asociaciones
-  # Asegúrate de que las migraciones para Transaction incluyan source_account_id y target_account_id
-  # Por ejemplo, en la migración:
-  # t.references :source_account, foreign_key: { to_table: :accounts }, null: false
-  # t.references :target_account, foreign_key: { to_table: :accounts }, null: false
+
   belongs_to :source_account, class_name: 'Account', foreign_key: 'source_account_id'
   belongs_to :target_account, class_name: 'Account', foreign_key: 'target_account_id'
 
@@ -52,7 +49,7 @@ class Transaction < ActiveRecord::Base
       sender_account.update!(saldo_total: sender_account.saldo_total - amount)
       receiver_account.update!(saldo_total: receiver_account.saldo_total + amount)
 
-      num_operation = SecureRandom.uuid
+      num_operation = SecureRandom.uuid # Genera un numero de operacion
 
       # Crear la transacción solo después de que los saldos se hayan actualizado con éxito
       transaction = Transaction.create!(
@@ -79,6 +76,8 @@ class Transaction < ActiveRecord::Base
   end
 
   # Método de clase para realizar la transferencia de dinero usando alias
+  # La logica es igual a la del metodo anterior
+
   def self.transfer_money_by_alias(sender_alias, receiver_alias, amount)
     # Validar que el monto sea positivo antes de iniciar la transacción
     unless amount > 0
