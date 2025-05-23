@@ -4,11 +4,10 @@ require 'securerandom' # Necesario para SecureRandom.uuid
 
 class Transaction < ActiveRecord::Base
   # Asociaciones
-
   belongs_to :source_account, class_name: 'Account', foreign_key: 'source_account_id'
   belongs_to :target_account, class_name: 'Account', foreign_key: 'target_account_id'
 
-  # Enum para tipos de transacción
+  # enum para tipos de transacción
   enum :transaction_type, {
     transferencia_recibida: 0,
     transferencia_enviada: 1,
@@ -22,7 +21,8 @@ class Transaction < ActiveRecord::Base
   }
 
   # Validaciones
-  validates :num_operation, presence: true, uniqueness: true
+  # validates :no_operation, presence: true, uniqueness: true
+  validates :no_operation, presence: true, uniqueness: true
   validates :value, presence: true, numericality: { greater_than: 0 }
   validates :transaction_type, presence: true
   validates :date, presence: true
@@ -42,18 +42,18 @@ class Transaction < ActiveRecord::Base
       sender_account = Account.find_by!(cvu: sender_cvu)
       receiver_account = Account.find_by!(cvu: receiver_cvu)
 
-      unless sender_account.saldo_total >= amount
+      unless sender_account.total_balance >= amount
         raise ActiveRecord::RecordInvalid.new(sender_account), "Saldo insuficiente en la cuenta del remitente."
       end
 
-      sender_account.update!(saldo_total: sender_account.saldo_total - amount)
-      receiver_account.update!(saldo_total: receiver_account.saldo_total + amount)
+      sender_account.update!(total_balance: sender_account.total_balance - amount)
+      receiver_account.update!(total_balance: receiver_account.total_balance + amount)
 
-      num_operation = SecureRandom.uuid # Genera un numero de operacion
+      no_operation = SecureRandom.uuid # Genera un Numero de operacion
 
       # Crear la transacción solo después de que los saldos se hayan actualizado con éxito
       transaction = Transaction.create!(
-        num_operation: num_operation,
+        no_operation: no_operation,
         value: amount,
         transaction_type: :transferencia_enviada, # Usamos el enum definido
         date: Date.current, 
@@ -89,17 +89,17 @@ class Transaction < ActiveRecord::Base
       sender_account = Account.find_by!(alias: sender_alias)
       receiver_account = Account.find_by!(alias: receiver_alias)
 
-      unless sender_account.saldo_total >= amount
+      unless sender_account.total_balance >= amount
         raise ActiveRecord::RecordInvalid.new(sender_account), "Saldo insuficiente en la cuenta del remitente."
       end
 
-      sender_account.update!(saldo_total: sender_account.saldo_total - amount)
-      receiver_account.update!(saldo_total: receiver_account.saldo_total + amount)
+      sender_account.update!(total_balance: sender_account.total_balance - amount)
+      receiver_account.update!(total_balance: receiver_account.total_balance + amount)
 
-      num_operation = SecureRandom.uuid
+      no_operation = SecureRandom.uuid
 
       transaction = Transaction.create!(
-        num_operation: num_operation,
+        no_operation: no_operation,
         value: amount,
         transaction_type: :transferencia_enviada,
         date: Date.current,

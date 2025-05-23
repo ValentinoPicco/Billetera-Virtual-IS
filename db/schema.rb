@@ -25,8 +25,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_17_020612) do
     t.integer "user_id"
     t.integer "cvu", null: false
     t.string "alias"
-    t.integer "saldo_total"
-    t.date "fecha_creacion"
+    t.integer "total_balance"
+    t.date "creation_date"
     t.string "password", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -34,12 +34,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_17_020612) do
   end
 
   create_table "cards", force: :cascade do |t|
-    t.integer "nro_tarjeta"
+    t.integer "no_card"
     t.integer "account_holder_id"
     t.integer "cvv"
-    t.string "fecha_creacion"
-    t.string "fecha_vto"
-    t.string "nombre_titular"
+    t.string "creation_date"
+    t.string "exp_date"
+    t.string "holder_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_holder_id"], name: "index_cards_on_account_holder_id"
@@ -56,15 +56,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_17_020612) do
   end
 
   create_table "services", force: :cascade do |t|
-    t.string "nom_service"
-    t.integer "monto_mensual"
-    t.date "fecha_pago"
+    t.string "name_service"
+    t.integer "montlhy_mounth"
+    t.date "pay_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "transactions", force: :cascade do |t|
-    t.integer "num_operation", null: false
+    t.integer "no_operation", null: false
     t.integer "source_account_id", null: false
     t.integer "target_account_id"
     t.integer "value"
