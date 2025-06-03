@@ -15,8 +15,8 @@ class Account < ActiveRecord::Base
   validates :user, presence: true   # debe estar asociado a un usuario
   validates :cvu, presence: true, uniqueness: true, numericality: { only_integer: true }
   validates :alias, presence: true, uniqueness: true
-  validates :saldo_total, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
-  validates :fecha_creacion, presence: true
+  validates :total_balance, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
+  validates :creation_date, presence: true
   validates :password, presence: true, length: { minimum: 6 }
 
 end

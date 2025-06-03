@@ -11,6 +11,9 @@ require_relative 'models/transaction'
 
 class App < Sinatra::Application
 
+    set :views, File.expand_path('views', __dir__)
+    set :public_folder,  File.expand_path('public', __dir__)
+
   configure :development do
     enable :logging
     logger = Logger.new(STDOUT)
@@ -24,6 +27,15 @@ class App < Sinatra::Application
   end
 
   get '/' do
-    'Welcome'
+    erb :index
   end
+
+  get '/register' do
+    erb :register
+  end
+
+  get '/home' do
+    erb :home
+  end
+  
 end

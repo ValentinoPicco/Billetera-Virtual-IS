@@ -5,12 +5,12 @@ class Card < ActiveRecord::Base
 
   # Callback
 
-  before_create :set_nombre_titular
+  before_create :set_holder_name
 
   private
 
-  def set_nombre_titular
-    self.nombre_titular = account_holder.user.name if nombre_titular.blank?
+  def set_holder_name
+    self.holder_name = account_holder.user.name if holder_name.blank?
   end
 end
 

@@ -3,9 +3,9 @@ class CreateAccounts < ActiveRecord::Migration[8.0]
     create_table :accounts do |t|
       t.references :user, foreign_key: true
       t.integer :cvu, null: false
-      t.string :alias
-      t.integer :saldo_total
-      t.date :fecha_creacion
+      t.string :alias, null: false
+      t.integer :total_balance
+      t.date :creation_date
       t.string :password, null: false
       t.timestamps
     end

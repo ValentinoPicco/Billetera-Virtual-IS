@@ -1,0 +1,52 @@
+<section class="header">
+    <div class="perfil">
+        <img src="/image/hojaperfil.webp" alt="hoja fondo perfil" />
+    </div>
+</section>
+
+<section class="menu">
+
+    <div class="parent">
+        <div class="div1">
+            <h3>Dinero Disponible</h3>
+            <div class="dinero">
+                <p> $ <span id="monto">2000000</span></p>
+                <button id="toggle">ocultar</button>
+            </div>
+        </div>
+  
+        <div class="div2">
+            <h3>Tarjeta</h3>
+        </div>
+        <div class="div3">
+            <h3>Ultimos Movimientos</h3>
+            <div class="movimientos">
+                <p>transferencia recibida <span class="monto positivo">+20000</span></p>
+                <p>transferencia enviada <span class="monto negativo">-5000</span></p>
+                <p>transferencia recibida <span class="monto positivo">+10000</span></p>
+                <p>pago de servicio <span class="monto negativo">-5000</span></p>
+                <p>transferencia enviada <span class="monto negativo">-5000</span></p>
+                <p>pago de sueldo <span class="monto positivo">+1000000</span></p>
+            </div>
+        </div>
+    </div>
+    
+</section>
+
+<section class="footer"></section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const boton = document.getElementById("toggle");
+    const monto = document.getElementById("monto");
+
+    const valorReal = monto.textContent;
+    let oculto = false;
+
+    boton.addEventListener("click", () => {
+      oculto = !oculto;
+      monto.textContent = oculto ? "****" : valorReal;
+      boton.textContent = oculto ? "mostrar" : "ocultar";
+    });
+  });
+</script>
