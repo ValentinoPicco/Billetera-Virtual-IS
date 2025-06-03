@@ -4,6 +4,7 @@ class Account < ActiveRecord::Base
     belongs_to :user
 
     has_one :card
+    has_many :other_cards, foreign_key: :account_holder_id
 
     has_many :account_contacts
     has_many :contact_accounts, through: :account_contacts, source: :contact_account
