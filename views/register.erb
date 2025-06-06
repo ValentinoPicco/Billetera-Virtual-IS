@@ -16,6 +16,13 @@
     </form>
   </div>
 
+  <% if @error %>
+    <div class="error-message">
+        <p style="color: red; font-weight: bold;"><%= @error %></p>
+    </div>
+  <% end %>
+
+
   <div class="divider"></div>
 
   <div class="register">

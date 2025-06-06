@@ -14,6 +14,9 @@ class App < Sinatra::Application
     set :views, File.expand_path('views', __dir__)
     set :public_folder,  File.expand_path('public', __dir__)
 
+    enable :sessions
+    set :session_secret, SecureRandom.hex(64)
+
   configure :development do
     enable :logging
     logger = Logger.new(STDOUT)

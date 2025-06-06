@@ -308,3 +308,9 @@
   .dinero p {
     display: block;
   }
+
+  .error-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
