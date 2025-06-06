@@ -5,11 +5,16 @@
 <section class="content">
   <div class="login">
     <h2>Iniciar Sesión</h2>
-    <form class"form-login">
-      <input type="text" placeholder="DNI" required />
-      <input type="password" placeholder="Contraseña" required />
+    <form class"form-login" action="/login" method="post">
+      <input type="text" name="dni" placeholder="DNI" required />
+      <input type="password" name="password" placeholder="Contraseña" required />
       <button type="submit">INGRESAR</button>
     </form>
+    <% if @error %>
+        <div class="error-message">
+            <p style="color: red; font-weight: bold; margin-top: 10px"><%= @error %></p>
+        </div>
+    <% end %>
   </div>
 
   <div class="divider"></div>
