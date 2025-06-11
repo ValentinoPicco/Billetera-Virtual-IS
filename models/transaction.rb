@@ -117,4 +117,51 @@ class Transaction < ActiveRecord::Base
     raise StandardError, "Error inesperado durante la transferencia: #{e.message}"
   end
 
+
+  # Método de clase para pagar un servicio
+  def self.pay_service(name_service, sender_cvu)
+    ActiveRecord::Base.transaction do
+      # Validaciones iniciales
+      service = Service.find_by!(name_service: name_service)
+      amount = service.monthly_amount
+      
+      unless amount > 0
+        raise ActiveRecord::RecordInvalid.new(Transaction.new), "El monto debe ser mayor que cero."
+      end
+
+      sender_account = Account.find_by!(cvu: sender_cvu)
+      
+      unless sender_account.total_balance >= amount
+        raise ActiveRecord::RecordInvalid.new(sender_account), "Saldo insuficiente."
+      end
+
+      # Actualizar saldo
+      sender_account.update!(total_balance: sender_account.total_balance - amount)
+
+      # Crear transacción
+      transaction = Transaction.create!(
+        no_operation: SecureRandom.uuid,
+        value: amount,
+        transaction_type: :pago_servicio,
+        date: Date.current, 
+        source_account: sender_account
+      )
+      
+      # Registrar servicio pagado
+      PayedService.create!(
+        service_id: service.id,
+        account_id: sender_account.id,
+        pay_date: Date.current
+      )
+
+      transaction
+    end
+  rescue ActiveRecord::RecordNotFound => e
+    raise StandardError, "Error: #{e.message}"
+  rescue ActiveRecord::RecordInvalid => e
+    raise StandardError, "Error de validación: #{e.message}"
+  rescue => e
+    raise StandardError, "Error inesperado: #{e.message}"
+  end
+
 end

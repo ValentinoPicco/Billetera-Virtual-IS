@@ -1,7 +1,7 @@
 class CreateTransactions < ActiveRecord::Migration[8.0]
   def change
     create_table :transactions do |t|
-      t.integer :no_operation, null: false
+      t.string :no_operation, null: false
       t.references :source_account, foreign_key: { to_table: :accounts }, null: false
       t.references :target_account, foreign_key: { to_table: :accounts } 
       t.integer :value, null: false

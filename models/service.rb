@@ -1,4 +1,6 @@
 class Service < ActiveRecord::Base
-  belongs_to :account_holder, class_name: 'Account', foreign_key: :account_id
-  has_many :account
+  has_many :payed_services
+
+  validates :name_service, presence: true, uniqueness: true
+  validates :monthly_amount, presence: true, numericality: { greater_than: 0 }
 end

@@ -45,16 +45,25 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_112523) do
     t.index ["account_holder_id"], name: "index_cards_on_account_holder_id"
   end
 
+  create_table "payed_services", force: :cascade do |t|
+    t.integer "service_id", null: false
+    t.integer "account_id", null: false
+    t.date "pay_date", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_payed_services_on_account_id"
+    t.index ["service_id"], name: "index_payed_services_on_service_id"
+  end
+
   create_table "services", force: :cascade do |t|
-    t.string "nom_service"
-    t.integer "montlhy_mounth"
-    t.date "pay_date"
+    t.string "name_service", null: false
+    t.integer "monthly_amount", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "transactions", force: :cascade do |t|
-    t.integer "No_operation", null: false
+    t.string "no_operation", null: false
     t.integer "source_account_id", null: false
     t.integer "target_account_id"
     t.integer "value"
@@ -83,6 +92,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_112523) do
   add_foreign_key "account_contacts", "accounts", column: "contact_account_id"
   add_foreign_key "accounts", "users"
   add_foreign_key "cards", "accounts", column: "account_holder_id"
+  add_foreign_key "payed_services", "accounts"
+  add_foreign_key "payed_services", "services"
   add_foreign_key "transactions", "accounts", column: "source_account_id"
   add_foreign_key "transactions", "accounts", column: "target_account_id"
 end
