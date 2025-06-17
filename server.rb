@@ -108,9 +108,28 @@ class App < Sinatra::Application
     sender_account = User.find(session[:user_id]).account
     receiver_account = Account.find_by(alias: params[:dest_alias])
     amount = params[:amount].to_i
-    
-    Transaction.transfer_money_by_alias(sender_account.alias, receiver_account.alias, amount)
-    erb :home
+
+    if receiver_account.nil?
+      @error = "Cuenta destino no encontrada."
+    elsif receiver_account == sender_account
+      @error = "No podés transferirte a vos mismo."
+    elsif amount <= 0
+      @error = "El monto debe ser mayor a cero."
+    elsif sender_account.total_balance < amount
+      @error = "Saldo insuficiente."
+    else
+      # delegamos a Transaction
+      begin
+        Transaction.transfer_money_by_alias(sender_account.alias, receiver_account.alias, amount)
+        @success = "Transferencia realizada con éxito."
+      rescue => e
+        @error = "Ocurrió un error: #{e.message}"
+      end
+    end
+
+    @user = User.find(session[:user_id])
+    erb :transfer
   end
+
 
 end
