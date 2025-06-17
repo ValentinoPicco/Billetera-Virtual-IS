@@ -10,7 +10,7 @@
         <div class="div1">
             <h3>Dinero Disponible</h3>
             <div class="dinero">
-                <p> $ <span id="monto">2000000</span></p>
+                <p> $ <span id="monto"><%= (@user.account.total_balance || 0) / 100.0 %></span></p>
                 <button id="toggle">ocultar</button>
             </div>
             <form action="/transfer" method="get">
