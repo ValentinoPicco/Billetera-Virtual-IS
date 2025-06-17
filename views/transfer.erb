@@ -1,0 +1,18 @@
+<h2>Transferir Dinero</h2>
+<form action="/transfer" method="post">
+  <label>alias del destinatario:</label>
+  <input type="text" name="dest_alias" required>
+
+  <label>Monto a transferir:</label>
+  <input type="number" name="amount" required>
+
+  <input type="submit" value="Transferir">
+</form>
+
+<% if @error %>
+  <p style="color:red"><%= @error %></p>
+<% end %>
+
+<% if @success %>
+  <p style="color:green"><%= @success %></p>
+<% end %>

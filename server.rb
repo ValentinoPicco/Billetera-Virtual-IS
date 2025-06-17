@@ -50,17 +50,39 @@ class App < Sinatra::Application
     )
 
     if user.save
-      session[:user_id] = user.id
-      redirect '/home'
+      begin
+        Account.create!(
+          user: user,
+          cvu: generate_unique_cvu,
+          alias: user.name + user.surname,
+          total_balance: 0,
+          creation_date: Time.now,
+          password: user.password
+        )
+
+        session[:user_id] = user.id
+        redirect '/home'
+      rescue ActiveRecord::RecordInvalid => e
+        user.destroy # revertimos si falla la creación de la cuenta
+        @error = "Error al crear la cuenta: #{e.message}"
+        erb :register
+      end
     else
       @error = user.errors.full_messages.join(', ')
-      erb :register
+      erb :register 
     end
   end
-
+  
+  def generate_unique_cvu
+    loop do
+      cvu = rand(10**16).to_s.rjust(16, '0')
+      break cvu unless Account.exists?(cvu: cvu)
+    end
+  end
+  
   post '/login' do
     user = User.find_by(dni: params[:dni])
-
+    
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
       redirect '/home'
@@ -77,4 +99,18 @@ class App < Sinatra::Application
     erb :home
   end
   
+  get '/transfer' do 
+    @user = User.find(session[:user_id])
+    erb :transfer
+  end
+
+  post '/transfer' do
+    sender_account = User.find(session[:user_id]).account
+    receiver_account = Account.find_by(alias: params[:dest_alias])
+    amount = params[:amount].to_i
+    
+    Transaction.transfer_money_by_alias(sender_account.alias, receiver_account.alias, amount)
+    erb :home
+  end
+
 end
