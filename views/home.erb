@@ -13,9 +13,14 @@
                 <p> $ <span id="monto"><%= (@user.account.total_balance || 0) / 100.0 %></span></p>
                 <button id="toggle">ocultar</button>
             </div>
-            <form action="/transfer" method="get">
-                <button type="submit">Transferir dinero</button>
+            <div class="acciones">
+                <form action="/transfer" method="get">
+                    <button type="submit">Transferir dinero</button>
                 </form>
+                <form action="/insert_money" method="get">
+                    <button type="submit"> Ingresar dinero</button>
+                </form>
+            </div>    
         </div>
   
         <div class="div2">

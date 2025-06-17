@@ -1,13 +1,12 @@
-<h2>Transferir Dinero</h2>
-<form action="/transfer" method="post">
-  <label>alias del destinatario:</label>
-  <input type="text" name="dest_alias" required>
+<h2>Ingresar Dinero</h2>
+<form action="/insert_money" method="post">
 
-  <label>Monto a transferir (centavos):</label>
+  <label>Monto a ingresar (centavos):</label>
   <input type="number" name="amount" required>
 
-  <input type="submit" value="Transferir">
+  <input type="submit" value="Ingresar">
 </form>
+
 
 <% if @error %>
   <p style="color:red"><%= @error %></p>
@@ -16,7 +15,6 @@
 <% if @success %>
   <p style="color:green"><%= @success %></p>
 <% end %>
-
 
 <form action="/home" method="get">
     <button type="submit"> Volver al menu </button>
