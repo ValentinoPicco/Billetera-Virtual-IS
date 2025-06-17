@@ -50,6 +50,10 @@
     box-sizing: border-box;
   }
   
+  .register_text{
+    text-align: center;
+  }
+
   .login {
     flex: 1;
     display: flex;
