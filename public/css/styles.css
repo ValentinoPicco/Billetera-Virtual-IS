@@ -310,3 +310,111 @@
     justify-content: center;
     align-items: center;
   }
+
+  .container {
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+}
+
+.alert {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.alert-error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 50px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom:50px;
+}
+
+.form-actions input,
+.back-form button {
+  padding: 10px;
+  width: 100%;
+  border: none;
+  background-color: #4c924c;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.back-form button {
+  position: fixed;
+  bottom: 50px;
+}
+
+.form-actions input:hover,
+.back-form button:hover {
+  background-color: #3e7a3e;
+}
+
+label{
+  margin-top:30px;
+}
+
+.page-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.acciones{
+  margin: 15px;
+  margin-left: -10px;
+}
+
+.acciones button {
+  margin:15px;
+  padding:10px;
+  background-color: #4c924c;
+  color: white;
+  font-weight: 500;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.acciones button:hover {
+  background-color: #3e7a3e;
+}
+
+.dinero button{
+  margin:5px;
+  padding:10px;
+  background-color: #4c924c;
+  color: white;
+  font-weight:500;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dinero button:hover{
+  background-color: #3e7a3e;
+}

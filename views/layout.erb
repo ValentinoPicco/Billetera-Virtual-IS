@@ -8,6 +8,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-  <%= yield %>
+  <section class="header">
+    <div class="perfil">
+        <img src="/image/hojaperfil.webp" alt="hoja fondo perfil" />
+    </div>
+  </section>
+
+  <div class="page-container">
+    <%= yield %>
+  </div>
+
+  <section class="footer"></section>
 </body>
 </html>
