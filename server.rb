@@ -107,7 +107,7 @@ class App < Sinatra::Application
   post '/transfer' do
     sender_account = User.find(session[:user_id]).account
     receiver_account = Account.find_by(alias: params[:dest_alias])
-    amount = params[:amount].to_i
+    amount = (params[:amount].to_f * 100).round
 
     if receiver_account.nil?
       @error = "Cuenta destino no encontrada."
@@ -138,7 +138,7 @@ class App < Sinatra::Application
 
   post '/insert_money' do
     account = User.find(session[:user_id]).account
-    amount = params[:amount].to_i
+    amount = (params[:amount].to_f * 100).round
 
     if account.nil? 
       @error = "Cuenta no encontrada."

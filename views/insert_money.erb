@@ -13,8 +13,8 @@
   <div class="form-container">
     <form action="/insert_money" method="post" class="money-form">
       <div class="form-group">
-        <label for="amount">Monto a ingresar (centavos):</label>
-        <input type="number" name="amount" id="amount" required>
+        <label for="amount">Monto a ingresar (en pesos):</label>
+        <input type="number" name="amount" id="amount" min="0.01" step="0.01" required>
       </div>
 
       <div class="form-actions">

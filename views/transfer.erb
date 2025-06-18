@@ -1,6 +1,8 @@
 
 <div class="container">
   <h2>Transferir Dinero</h2>
+  
+  
 
   <% if @error %>
     <div class="alert alert-error"><%= @error %></div>
@@ -16,8 +18,11 @@
         <label for="dest_alias"> Alias del destinatario: </label>
         <input type="text" name="dest_alias" id="dest_alias" required>
 
-        <label for="amount">Monto a transferir (centavos):</label>
-        <input type="number" name="amount" id="amount" required>
+        <label for="amount">Monto a transferir (en pesos):</label>
+        <input type="number" name="amount" id="amount" min="0.01" step="0.01"required>
+
+        <p><strong>Saldo actual:</strong> <%= (@user.account.total_balance.to_f / 100).round(2) %> pesos</p>
+
       </div>
 
       <div class="form-actions">
