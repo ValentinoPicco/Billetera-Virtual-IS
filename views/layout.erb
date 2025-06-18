@@ -9,6 +9,14 @@
 </head>
 <body>
   <section class="header">
+    <% if request.path_info == '/home' %>
+        <div class="logout-button">
+            <form action="/logout" method="post">
+                <button type="submit">Cerrar Sesión</button>
+            </form>
+        </div>
+    <% end %>
+
     <div class="perfil">
         <img src="/image/hojaperfil.webp" alt="hoja fondo perfil" />
     </div>

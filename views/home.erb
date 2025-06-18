@@ -1,6 +1,7 @@
 
 <section class="menu">
 
+
     <div class="parent">
         <div class="div1">
             <h3>Dinero Disponible</h3>
@@ -15,6 +16,9 @@
                 <form action="/insert_money" method="get">
                     <button type="submit"> Ingresar dinero</button>
                 </form>
+                <form action="/service" method="get">
+                    <button type="submit"> Pagar servicio</button>
+                </form>
             </div>    
         </div>
   
@@ -22,14 +26,15 @@
             <h3>Tarjeta</h3>
         </div>
         <div class="div3">
-            <h3>Ultimos Movimientos</h3>
+            <h3>Últimos Movimientos</h3>
             <div class="movimientos">
-                <p>transferencia recibida <span class="monto positivo">+20000</span></p>
-                <p>transferencia enviada <span class="monto negativo">-5000</span></p>
-                <p>transferencia recibida <span class="monto positivo">+10000</span></p>
-                <p>pago de servicio <span class="monto negativo">-5000</span></p>
-                <p>transferencia enviada <span class="monto negativo">-5000</span></p>
-                <p>pago de sueldo <span class="monto positivo">+1000000</span></p>
+                <ul>
+                    <% @last_transactions.each do |tx| %>
+                        <li>
+                        <strong><%= tx.date %></strong> - <%= tx.transaction_type %> - $<%= tx.value %>
+                        </li>
+                    <% end %>
+                </ul>
             </div>
         </div>
     </div>
