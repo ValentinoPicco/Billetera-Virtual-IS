@@ -162,5 +162,33 @@ class App < Sinatra::Application
     redirect '/'
   end
 
+  get '/service' do 
+    @user = User.find(session[:user_id])
+    @services = Service.all
+    erb :service
+  end
+
+  post '/service' do
+    sender_account = User.find(session[:user_id]).account
+    service = Service.find_by(name_service: params[:n_ser])
+
+    if service.nil?
+      @error = "El servicio no se encuentra disponible."
+    elsif sender_account.total_balance < service.monthly_amount
+      @error = "Saldo insuficiente."
+    else
+      begin
+        Transaction.pay_service(service.name_service, sender_account.cvu)
+        @success = "Pago realizado con éxito."
+      rescue => e
+        @error = "Ocurrió un error: #{e.message}"
+      end
+    end
+
+    @user = User.find(session[:user_id])
+    @services = Service.all
+    erb :service
+  end
+
 
 end

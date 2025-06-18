@@ -1,0 +1,37 @@
+
+<div class="container">
+  <h2>Pagar Servicio</h2>
+
+  <% if @error %>
+    <div class="alert alert-error"><%= @error %></div>
+  <% end %>
+
+  <% if @success %>
+    <div class="alert alert-success"><%= @success %></div>
+  <% end %>
+
+  <div class="form-container">
+    <form action="/service" method="post" class="money-form">
+      <div class="form-group">
+        <label for="n_ser"> Servicio a pagar: </label>
+        <select name="n_ser" id="n_ser" required>
+        <% @services.each do |service| %>
+            <option value="<%= service.name_service %>"><%= service.name_service %> - $<%= service.monthly_amount/100 %></option>
+        <% end %>
+        </select>
+
+      </div>
+
+      <div class="form-actions">
+        <input type="submit" value="Pagar">
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<div class="back-form button">
+    <form action="/home" method="get">
+        <button type="submit"> Volver al menu </button>
+    </form>
+</div>
