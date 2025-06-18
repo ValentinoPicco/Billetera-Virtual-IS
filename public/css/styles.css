@@ -422,3 +422,18 @@ label{
 .dinero button:hover{
   background-color: #3e7a3e;
 }
+
+.logout-button button {
+  margin:15px;
+  padding:10px;
+  background-color: #4c924c;
+  color: black;
+  font-weight: 500;
+  border: 1px solid black;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: absolute;
+  left: 10px;
+  top: 15px;
+}

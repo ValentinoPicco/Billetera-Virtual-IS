@@ -156,6 +156,10 @@ class App < Sinatra::Application
     erb :insert_money
 
   end
+  post '/logout' do
+    session.clear
+    redirect '/'
+  end
 
 
 end
