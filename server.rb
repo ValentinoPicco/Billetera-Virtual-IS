@@ -9,6 +9,7 @@ require_relative 'models/service'
 require_relative 'models/card'
 require_relative 'models/payed_service'
 require_relative 'models/transaction'
+require_relative 'models/pig'
 
 class App < Sinatra::Application
 
@@ -188,6 +189,78 @@ class App < Sinatra::Application
     @user = User.find(session[:user_id])
     @services = Service.all
     erb :service
+  end
+
+  get '/pigs' do 
+    @user = User.find(session[:user_id])
+    @pigs = Pig.where(account_id: @user.account.id)
+    erb :pigs
+  end
+
+  post '/pigs' do
+    sender_account = User.find(session[:user_id]).account
+    name_pig = (params[:name])
+    amount = (params[:amount].to_f * 100).round
+    if sender_account.total_balance < amount
+      @error = "Saldo insuficiente."
+    else
+      begin
+        Account.create_pig(name_pig, sender_account.cvu, amount)
+        @success = "Pago realizado con éxito."
+      rescue => e
+        @error = "Ocurrió un error: #{e.message}"
+      end
+    end
+
+    @user = User.find(session[:user_id])
+    @pigs = Pig.where(account_id: @user.account.id)
+    erb :pigs
+  end
+
+  post '/pigs/:id/delete' do
+    user = User.find(session[:user_id])
+    pig = Pig.find_by(id: params[:id], account_id: user.account.id)
+
+    if pig
+      # Le devuelve el dinero al usuario
+      account = user.account
+      account.update!(total_balance: account.total_balance + pig.total_balance)
+
+      pig.destroy
+      @success = "Chanchito roto y dinero devuelto."
+    else
+      @error = "Chanchito no encontrado"
+    end
+
+    @user = user
+    @pigs = Pig.where(account_id: user.account.id)
+    erb :pigs
+  end
+
+  post '/pigs/:id/update' do
+    user = User.find(session[:user_id])
+    pig = Pig.find_by(id: params[:id], account_id: user.account.id)
+
+    if pig
+      additional_amount = (params[:amount].to_f * 100).round
+
+      if additional_amount <= 0
+        @error = "El monto debe ser mayor a cero."
+      elsif user.account.total_balance < additional_amount
+        @error = "Saldo insuficiente en tu cuenta."
+      else
+        # Restamos de la cuenta y sumamos al chanchito
+        user.account.update!(total_balance: user.account.total_balance - additional_amount)
+        pig.update!(total_balance: pig.total_balance + additional_amount)
+        @success = "Se agregaron $#{'%.2f' % (additional_amount / 100.0)} al chanchito."
+      end
+    else
+      @error = "Chanchito no encontrado."
+    end
+
+    @user = user
+    @pigs = Pig.where(account_id: user.account.id)
+    erb :pigs
   end
 
   get '/profile' do

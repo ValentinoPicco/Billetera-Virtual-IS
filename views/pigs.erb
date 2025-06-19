@@ -1,0 +1,65 @@
+<section class="menu">
+  <div class="parent">
+    <div class="div1">
+      <h3>Crear Chanchito</h3>
+
+      <% if @error %>
+        <div class="alert alert-error"><%= @error %></div>
+      <% end %>
+
+      <% if @success %>
+        <div class="alert alert-success"><%= @success %></div>
+      <% end %>
+
+      <form action="/pigs" method="post" class="money-form">
+        <div class="form-group">
+          <label for="name">Nombre del chanchito:</label>
+          <input type="text" name="name" id="name" required>
+
+          <label for="amount">Monto a reservar:</label>
+          <input type="number" name="amount" id="amount" required>
+        </div>
+
+        <div class="form-actions">
+          <input type="submit" value="Crear">
+        </div>
+      </form>
+
+    </div>
+
+    <div class="div3">
+        <h3>Tus Chanchitos</h3>
+        <% if @pigs.any? %>
+            <div class="movimientos">
+            <ul class="ultmov">
+                <% @pigs.each do |pig| %>
+                <li>
+                    <strong><%= pig.name_pig %></strong> — 
+                    $<%= '%.2f' % (pig.total_balance.to_f / 100) %> — 
+                    <%= pig.creation_date.strftime('%d/%m/%Y') %>
+
+
+                    <form action="/pigs/<%= pig.id %>/update" method="post" style="display:inline; margin-left: 1em;">
+                    <input type="number" name="amount" step="0.01" min="0.01" placeholder="Monto a agregar" required>
+                    <button type="submit">Sumar</button>
+                    </form>
+
+                    <form action="/pigs/<%= pig.id %>/delete" method="post" style="display:inline; margin-left: 0.5em;">
+                    <button type="submit">Romper</button>
+                    </form>
+                </li>
+                <% end %>
+            </ul>
+            </div>
+        <% else %>
+            <p>No tenés chanchitos creados todavía.</p>
+        <% end %>
+    </div>
+
+</section>
+
+    <div class="back-form button">
+        <form action="/home" method="get">
+            <button type="submit"> Volver al menu </button>
+        </form>
+    </div>

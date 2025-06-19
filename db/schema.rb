@@ -55,6 +55,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_112523) do
     t.index ["service_id"], name: "index_payed_services_on_service_id"
   end
 
+  create_table "pigs", force: :cascade do |t|
+    t.integer "account_id", null: false
+    t.string "name_pig", null: false
+    t.integer "total_balance"
+    t.date "creation_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_pigs_on_account_id"
+  end
+
   create_table "services", force: :cascade do |t|
     t.string "name_service", null: false
     t.integer "monthly_amount", null: false
@@ -94,6 +104,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_112523) do
   add_foreign_key "cards", "accounts", column: "account_holder_id"
   add_foreign_key "payed_services", "accounts"
   add_foreign_key "payed_services", "services"
+  add_foreign_key "pigs", "accounts"
   add_foreign_key "transactions", "accounts", column: "source_account_id"
   add_foreign_key "transactions", "accounts", column: "target_account_id"
 end
