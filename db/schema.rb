@@ -34,7 +34,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_112523) do
   end
 
   create_table "cards", force: :cascade do |t|
-    t.integer "No_card"
+    t.string "no_card"
     t.integer "account_holder_id"
     t.integer "cvv"
     t.string "creation_date"
