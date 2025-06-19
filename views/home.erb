@@ -35,10 +35,17 @@
         <div class="div2">
             <h3>Tarjeta</h3>
             <div class="tarjeta">
-                <p class="tarjeta-no"><%= @user.account.card.no_card %></p>
+                <div class="nombrelogo">
+                    <p>ORANPAY</p>
+                    <img src="/image/oranpay.png" alt="Logo de OranPay">
+                </div>
+                <p class="tarjeta-no"><%= @user.account.card.no_card.scan(/.{1,4}/).join(' ') %></p>
                 <div class="tarjeta-info">
                     <p><strong>Vto:</strong> <%= @user.account.card.exp_date %></p>
-                    <p><strong>CVV:</strong> <%= @user.account.card.cvv %></p>
+                    <p><strong>CVV:</strong> 
+                        <span id="cvv_value">***</span>
+                        <button type="button" id="toggle_cvv" class="ojito"><i id="cvv_icon" class="fa-solid fa-eye-slash"></i></button>
+                    </p>
                 </div>
             <p class="tarjeta-holder"><%= @user.account.card.holder_name %></p>
             </div>
@@ -92,5 +99,19 @@
       montoTotal.textContent = oculto ? "****" : valorTotalReal;
       boton.textContent = oculto ? "mostrar" : "ocultar";
     });
+    const cvvValue = document.getElementById("cvv_value");
+    const toggleCvvBtn = document.getElementById("toggle_cvv");
+    const cvvIcon = document.getElementById("cvv_icon");
+    
+    const realCvv = "<%= @user.account.card.cvv %>";
+    let cvvOculto = true;
+    
+    toggleCvvBtn.addEventListener("click", () => {
+      cvvOculto = !cvvOculto;
+      cvvValue.textContent = cvvOculto ? "***" : realCvv;
+      cvvIcon.className = cvvOculto ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
+    });
+    
+    
   });
 </script>
