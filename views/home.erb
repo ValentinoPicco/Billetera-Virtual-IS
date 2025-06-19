@@ -128,24 +128,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ultimos movimientos
+    const modal = document.getElementById('modal-movimiento');
     document.querySelectorAll('.movimiento-item').forEach(item => {
-      item.addEventListener('click', function() {
-        this.classList.add('animar');
-        setTimeout(() => this.classList.remove('animar'), 200);
-        document.getElementById('modal-no-operation').textContent = "N° Operación: " + item.dataset.noOperation;
-        document.getElementById('modal-value').textContent = "Monto: " + item.dataset.value;
-        document.getElementById('modal-date').textContent = "Fecha: " + item.dataset.date;
-        document.getElementById('modal-transaction-type').textContent = "Tipo: " + item.dataset.transactionType;
-        document.getElementById('modal-reason').textContent = "Motivo: " + (item.dataset.reason || "Sin motivo");
-        document.getElementById('modal-movimiento').style.display = 'block';
-      });
+        item.addEventListener('click', function() {
+            this.classList.add('animar');
+            setTimeout(() => this.classList.remove('animar'), 200);
+            document.getElementById('modal-no-operation').textContent = "N° Operación: " + item.dataset.noOperation;
+            document.getElementById('modal-value').textContent = "Monto: " + item.dataset.value;
+            document.getElementById('modal-date').textContent = "Fecha: " + item.dataset.date;
+            document.getElementById('modal-transaction-type').textContent = "Tipo: " + item.dataset.transactionType;
+            document.getElementById('modal-reason').textContent = "Motivo: " + (item.dataset.reason || "Sin motivo");
+            modal.style.display = 'block'; // <-- Asegura que el modal se muestre
+            setTimeout(() => modal.classList.add('show'), 10); // <-- Activa la animación
+        });
     });
     document.getElementById('cerrar-modal').onclick = function() {
-        document.getElementById('modal-movimiento').style.display = 'none';
+        modal.classList.remove('show');
+        setTimeout(() => modal.style.display = 'none', 300); // <-- Oculta tras la animación
     };
     window.onclick = function(event) {
-        if (event.target == document.getElementById('modal-movimiento')) {
-            document.getElementById('modal-movimiento').style.display = 'none';
+        if (event.target == modal) {
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = 'none', 300);
         }
     };
 });

@@ -319,37 +319,50 @@ p.vence {
   transition: background 0.5s;
   cursor: pointer;
 }
+
 .movimiento-item.animar {
   background: #ffe082;
 }
 
-.modal { 
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%; 
-    overflow: auto;
-    background: rgba(0,0,0,0.4);
+.modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  overflow: auto;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  display: block; 
 }
 
-.modal-content { 
-    background: #FBB129; 
-    margin: 10% auto; 
-    padding: 20px; 
-    border-radius: 8px; 
-    width: 500px; 
-    position: relative;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+.modal.show {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.close { 
-    position: absolute; 
-    right: 10px; 
-    top: 10px; 
-    cursor: pointer; 
-    font-size: 24px;
+.modal-content {
+  background: #FCB633;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  position: relative;
+  transform: scale(0.95);
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.modal.show .modal-content {
+  transform: scale(1);
+}
+
+.close {
+  position: absolute;
+  right: 10px; top: 10px;
+  cursor: pointer;
+  font-size: 24px;
 }
 
 .ingresos {
@@ -551,7 +564,7 @@ label{
     /*background: linear-gradient(135deg, #1f1f1f, #3e3e3e);*/
     min-width: 400px;
     height: 230px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     font-family: 'Poppins', sans-serif;
     margin-top: 20px;
   }
@@ -613,6 +626,5 @@ label{
     color: #495057; 
   }
 
-  
 
-  
+
