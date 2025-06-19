@@ -1,0 +1,21 @@
+
+<div class="container">
+    <h2>Perfil de Usuario</h2>
+
+    <div class="profile-info">
+        <p><strong>Nombre:</strong> <%= @user.name %></p>
+        <p><strong>Apellido:</strong> <%= @user.surname %></p>
+        <p><strong>Numero de Documento:</strong> <%= @user.dni %></p>
+        <p><strong>Teléfono:</strong> <%= @user.tel %></p>
+        <p><strong>Dirección:</strong> <%= @user.address%></p>
+        <p><strong>Email:</strong> <%= @user.email %></p>
+        <p><strong>Alias:</strong> <%= @account.alias %></p>
+    </div>
+
+</div>
+
+    <div class="back-form button">
+        <form action="/home" method="get">
+            <button type="submit"> Volver al menu </button>
+        </form>
+    </div>

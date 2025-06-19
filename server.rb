@@ -158,5 +158,13 @@ class App < Sinatra::Application
 
   end
 
+  get '/profile' do
+    redirect '/' unless session[:user_id]
+
+    @user = User.find(session[:user_id])
+    @account = @user.account
+    erb :profile
+  end
+
 
 end
