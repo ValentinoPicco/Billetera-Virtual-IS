@@ -438,7 +438,21 @@ p.vence {
     max-width: 100%;
   }
 
-
+  .containermov {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;   
+    height: 100%;  
+    margin: 0 auto;
+    padding: 40px;  
+    background-color: #f8e1ba;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    margin: 50px auto;
+      
+  }
 
 h2 {
   text-align: center;
