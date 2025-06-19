@@ -1,6 +1,6 @@
 require_relative 'server'
 
-dni = 45935762
+dni = 46453070
 user = User.find_by(dni: dni)
 
 if user
