@@ -1,111 +1,122 @@
-
 <section class="menu">
+  <div class="parent">
+    <div class="div1">
+      <h3>Dinero Total</h3>
+      <div class="dinero" style="display: flex; align-items: center; gap: 10px">
+        <p> $ <span id="monto_total">****</span></p>
+        <button type="button" id="toggle_monto" class="ojito">
+          <i id="monto_icon" class="fa-solid fa-eye-slash"></i>
+        </button>
+      </div>
 
+      <h3>Dinero Disponible</h3>
+      <div class="dinero">
+        <p> $ <span id="monto">****</span></p>
+      </div>
 
-    <div class="parent">
-        <div class="div1">
-            <h3>Dinero Total</h3>
-            <div class="dinero" style = "display: flex; align-items: center; gap: 10px">
-                <p> $ <span id="monto_total"><%= ('%.2f' % ((@dinero_total || 0) / 100.0)) %></span></p>
-                <button id="toggle">ocultar</button>
-            </div>
-            <h3>Dinero Disponible</h3>
-            <div class="dinero">
-                <p> $ <span id="monto"><%= (@user.account.total_balance || 0) / 100.0 %></span></p>
-            </div>
-            <div class="acciones">
-                <div class="fila">
-                <form action="/transfer" method="get">
-                    <button type="submit">Transferir dinero</button>
-                </form>
-                <form action="/insert_money" method="get">
-                    <button type="submit"> Ingresar dinero</button>
-                </form>
-                </div>
-                <div class="fila">
-                <form action="/service" method="get">
-                    <button type="submit"> Pagar servicio</button>
-                </form>
-                <form action="/pigs" method="get">
-                    <button type="submit"> Chanchitos</button>
-                </form>
-                </div>
-            </div>    
+      <div class="acciones">
+        <div class="fila">
+          <form action="/transfer" method="get">
+            <button type="submit">Transferir dinero</button>
+          </form>
+          <form action="/insert_money" method="get">
+            <button type="submit">Ingresar dinero</button>
+          </form>
         </div>
-  
-        <div class="div2">
-            <h3>Tarjeta</h3>
-                <% if @user.account.card %>
-                    <p class="numero-tarjeta"> <%= @user.account.card.no_card.scan(/.{1,4}/).join(' ') %> </p>
-                    <p class="cvv"> 
-                        <span class="sin-espaciado"> CVV: </span>
-                        <%= @user.account.card.cvv%>
-                    </p>
-                    <% if @user.account.card.exp_date.present? %>
-                        <% fecha = Date.parse(@user.account.card.exp_date) rescue nil %>
-                        <% if fecha %>
-                            <p class="vence">
-                                <span class="sin-espaciado">Vence:</span>
-                                <%= fecha.strftime('%m/%y') %>
-                            </p>
-                        <% else %>
-                            <p class="vence">
-                                <span class="sin-espaciado">(error al mostrar) Vence:</span>
-                                <%= @user.account.card.exp_date %>
-                            </p>
-                        <% end %>
-                    <% end %>
-                <% else %>
-                    <p>No tienes tarjeta asociada.</p>
-                <% end %>
+        <div class="fila">
+          <form action="/service" method="get">
+            <button type="submit">Pagar servicio</button>
+          </form>
+          <form action="/pigs" method="get">
+            <button type="submit">Chanchitos</button>
+          </form>
         </div>
-        <div class="div3">
-            <h3>Últimos Movimientos</h3>
-            <div class="movimientos">
-                <ul class="ultmov">
-                <% @last_transactions.each do |tx| %>
-                    <% if tx.transaction_type.to_s == 'deposito' %>
-                        <li>
-                            <strong><%= tx.date %></strong>
-                            <span class="ingresos">Depósito</span>
-                            +$<%= ('%.2f' % (tx.value / 100.0)) %>
-                        </li>
-                        <% elsif tx.source_account_id == @user.account.id %>
-                        <li>
-                            <strong><%= tx.date %></strong>
-                            <span class="egresos"><%= tx.transaction_type.to_s.tr('_', ' ').split.map(&:capitalize).join(' ') %></span>
-                            -$<%= ('%.2f' % (tx.value / 100.0)) %>
-                        </li>
-                        <% elsif tx.target_account_id == @user.account.id %>
-                        <li>
-                            <strong><%= tx.date %></strong>
-                            <span class="ingresos"><%= tx.transaction_type.to_s.tr('_', ' ').split.map(&:capitalize).join(' ') %></span>
-                            +$<%= ('%.2f' % (tx.value / 100.0)) %>
-                        </li>
-                        <% end %>
-                    <% end %>
-                </ul>
-            </div>
-        </div>
+      </div>
     </div>
-    
+
+    <div class="div2">
+      <h3>Tarjeta</h3>
+      <div class="tarjeta">
+        <div class="nombrelogo">
+          <p>ORANPAY</p>
+          <img src="/image/oranpay.png" alt="Logo de OranPay">
+        </div>
+        <p class="tarjeta-no"><%= @user.account.card.no_card.scan(/.{1,4}/).join(' ') %></p>
+        <div class="tarjeta-info">
+          <p><strong>Vto:</strong> <%= @user.account.card.exp_date %></p>
+          <p><strong>CVV:</strong> 
+            <span id="cvv_value">***</span>
+            <button type="button" id="toggle_cvv" class="ojito">
+              <i id="cvv_icon" class="fa-solid fa-eye-slash"></i>
+            </button>
+          </p>
+        </div>
+        <p class="tarjeta-holder"><%= @user.account.card.holder_name + ' ' + @user.account.user.surname %></p>
+      </div>
+    </div>
+
+    <div class="div3">
+      <h3>Últimos Movimientos</h3>
+      <div class="movimientos">
+        <ul class="ultmov">
+          <% @last_transactions.each do |tx| %>
+            <% if tx.transaction_type.to_s == 'deposito' %>
+              <li>
+                <strong><%= tx.date %></strong>
+                <span class="ingresos">Depósito</span>
+                +$<%= ('%.2f' % (tx.value / 100.0)) %>
+              </li>
+            <% elsif tx.source_account_id == @user.account.id %>
+              <li>
+                <strong><%= tx.date %></strong>
+                <span class="egresos"><%= tx.transaction_type.to_s.tr('_', ' ').split.map(&:capitalize).join(' ') %></span>
+                -$<%= ('%.2f' % (tx.value / 100.0)) %>
+              </li>
+            <% elsif tx.target_account_id == @user.account.id %>
+              <li>
+                <strong><%= tx.date %></strong>
+                <span class="ingresos"><%= tx.transaction_type.to_s.tr('_', ' ').split.map(&:capitalize).join(' ') %></span>
+                +$<%= ('%.2f' % (tx.value / 100.0)) %>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
 </section>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const boton = document.getElementById("toggle");
+    // Montos
     const monto = document.getElementById("monto");
     const montoTotal = document.getElementById("monto_total");
+    const toggleMontoBtn = document.getElementById("toggle_monto");
+    const montoIcon = document.getElementById("monto_icon");
 
-    const valorReal = monto.textContent;
-    const valorTotalReal = montoTotal.textContent;
-    let oculto = false;
+    const valorMonto = "<%= ('%.2f' % ((@user.account.total_balance || 0) / 100.0)) %>";
+    const valorTotal = "<%= ('%.2f' % ((@dinero_total || 0) / 100.0)) %>";
+    let montoOculto = true;
 
-    boton.addEventListener("click", () => {
-      oculto = !oculto;
-      monto.textContent = oculto ? "****" : valorReal;
-      montoTotal.textContent = oculto ? "****" : valorTotalReal;
-      boton.textContent = oculto ? "mostrar" : "ocultar";
+    toggleMontoBtn.addEventListener("click", () => {
+      montoOculto = !montoOculto;
+      monto.textContent = montoOculto ? "****" : valorMonto;
+      montoTotal.textContent = montoOculto ? "****" : valorTotal;
+      montoIcon.className = montoOculto ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
+    });
+
+    // CVV
+    const cvvValue = document.getElementById("cvv_value");
+    const toggleCvvBtn = document.getElementById("toggle_cvv");
+    const cvvIcon = document.getElementById("cvv_icon");
+
+    const realCvv = "<%= @user.account.card.cvv %>";
+    let cvvOculto = true;
+
+    toggleCvvBtn.addEventListener("click", () => {
+      cvvOculto = !cvvOculto;
+      cvvValue.textContent = cvvOculto ? "***" : realCvv;
+      cvvIcon.className = cvvOculto ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
     });
   });
 </script>
