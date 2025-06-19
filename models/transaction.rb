@@ -187,4 +187,16 @@ class Transaction < ActiveRecord::Base
   rescue => e
     raise StandardError, "Error inesperado: #{e.message}"
   end
+
+
+  validate :saldo_suficiente
+
+  def saldo_suficiente
+    if source_account && source_account.total_balance < value.to_i
+      errors.add(:base, "Saldo insuficiente en la cuenta del remitente.")
+    end
+  end
+
+
+
 end
