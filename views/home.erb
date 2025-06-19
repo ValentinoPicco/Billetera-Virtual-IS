@@ -5,13 +5,13 @@
     <div class="parent">
         <div class="div1">
             <h3>Dinero Total</h3>
-            <div class="dinero">
+            <div class="dinero" style = "display: flex; align-items: center; gap: 10px">
                 <p> $ <span id="monto_total"><%= ('%.2f' % ((@dinero_total || 0) / 100.0)) %></span></p>
+                <button id="toggle">ocultar</button>
             </div>
             <h3>Dinero Disponible</h3>
             <div class="dinero">
                 <p> $ <span id="monto"><%= (@user.account.total_balance || 0) / 100.0 %></span></p>
-                <button id="toggle">ocultar</button>
             </div>
             <div class="acciones">
                 <div class="fila">
@@ -72,13 +72,16 @@
   document.addEventListener("DOMContentLoaded", () => {
     const boton = document.getElementById("toggle");
     const monto = document.getElementById("monto");
+    const montoTotal = document.getElementById("monto_total");
 
     const valorReal = monto.textContent;
+    const valorTotalReal = montoTotal.textContent;
     let oculto = false;
 
     boton.addEventListener("click", () => {
       oculto = !oculto;
       monto.textContent = oculto ? "****" : valorReal;
+      montoTotal.textContent = oculto ? "****" : valorTotalReal;
       boton.textContent = oculto ? "mostrar" : "ocultar";
     });
   });
