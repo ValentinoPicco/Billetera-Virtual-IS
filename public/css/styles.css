@@ -200,12 +200,13 @@
     }
   }
   
-  @media (max-width: 400px) {
+  @media (max-width: 450px) {
     .header {
       font-size: 15px;
       padding: 20px 0;
       border-bottom-left-radius: 15%;
       border-bottom-right-radius: 15%;
+      flex-direction: column;
     }
   
     .login input {
@@ -358,6 +359,11 @@ p.vence {
   transform: scale(0.95);
   transition: transform 0.3s cubic-bezier(.4,0,.2,1);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  font-size: 16px;
+}
+
+.modal-content p {
+    border-bottom: 1px solid #3e7a3e;
 }
 
 .modal.show .modal-content {
@@ -588,6 +594,10 @@ label{
   transform: scale(1.1);
 }
 
+.logout-button {
+  display: flex;
+}
+
 .logout-button button {
   margin:15px;
   padding:10px;
@@ -605,6 +615,13 @@ label{
 
 .logout-button button:hover {
   background-color: #3e7a3e;
+}
+
+@media (max-width: 450px) {
+    .logout-button button {
+      width: 70px;
+    }
+    
 }
 
 .tarjeta {
