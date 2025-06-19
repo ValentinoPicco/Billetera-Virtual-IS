@@ -139,25 +139,25 @@ class App < Sinatra::Application
   end
 
   post '/insert_money' do
-    account = User.find(session[:user_id]).account
+    user = User.find(session[:user_id])
     amount = (params[:amount].to_f * 100).round
 
-    if account.nil? 
+    if user.account.nil?
       @error = "Cuenta no encontrada."
     elsif amount <= 0
       @error = "El monto debe ser mayor que cero."
-    else 
+    else
       begin
-      account.update!(total_balance: account.total_balance + amount)
-      @success = "Dinero ingesado con exito."
-      # redirect '/home'
-      # return
+        Transaction.deposit_money(user, amount)
+        @success = "Dinero ingresado con éxito."
+      rescue => e
+        @error = "Ocurrió un error: #{e.message}"
       end
     end
-    @user = User.find(session[:user_id])
+    @user = user
     erb :insert_money
-
   end
+
   post '/logout' do
     session.clear
     redirect '/'

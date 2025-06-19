@@ -49,11 +49,11 @@ class Transaction < ActiveRecord::Base
       sender_account.update!(total_balance: sender_account.total_balance - amount)
       receiver_account.update!(total_balance: receiver_account.total_balance + amount)
 
-      no_operation = SecureRandom.uuid # Genera un Numero de operacion
+      num_operation = SecureRandom.uuid
 
       # Crear la transacción solo después de que los saldos se hayan actualizado con éxito
       transaction = Transaction.create!(
-        no_operation: no_operation,
+        num_operation: num_operation,
         value: amount,
         transaction_type: :transferencia_enviada, # Usamos el enum definido
         date: Date.current, 
@@ -75,93 +75,27 @@ class Transaction < ActiveRecord::Base
     raise StandardError, "Error inesperado durante la transferencia: #{e.message}"
   end
 
-  # Método de clase para realizar la transferencia de dinero usando alias
-  # La logica es igual a la del metodo anterior
+  def self.deposit_money(user, amount)
+    raise ArgumentError, 'El monto debe ser mayor que cero.' unless amount > 0
 
-  def self.transfer_money_by_alias(sender_alias, receiver_alias, amount)
-    # Validar que el monto sea positivo antes de iniciar la transacción
-    unless amount > 0
-      raise ActiveRecord::RecordInvalid.new(Transaction.new), "El monto debe ser mayor que cero."
-    end
-
-    # Iniciar una transacción para asegurar la atomicidad de las operaciones
     ActiveRecord::Base.transaction do
-      sender_account = Account.find_by!(alias: sender_alias)
-      receiver_account = Account.find_by!(alias: receiver_alias)
+      account = user.account
+      raise ActiveRecord::RecordNotFound, 'Cuenta no encontrada.' unless account
 
-      unless sender_account.total_balance >= amount
-        raise ActiveRecord::RecordInvalid.new(sender_account), "Saldo insuficiente en la cuenta del remitente."
-      end
+      account.update!(total_balance: account.total_balance + amount)
 
-      sender_account.update!(total_balance: sender_account.total_balance - amount)
-      receiver_account.update!(total_balance: receiver_account.total_balance + amount)
-
-      no_operation = SecureRandom.uuid
-
-      transaction = Transaction.create!(
-        no_operation: no_operation,
-        value: amount,
-        transaction_type: :transferencia_enviada,
-        date: Date.current,
-        source_account: sender_account,
-        target_account: receiver_account
-      )
-
-      transaction
-    end
-  rescue ActiveRecord::RecordNotFound => e
-    raise StandardError, "Error de cuenta: #{e.message}"
-  rescue ActiveRecord::RecordInvalid => e
-    raise StandardError, "Error de validación: #{e.message}"
-  rescue => e
-    raise StandardError, "Error inesperado durante la transferencia: #{e.message}"
-  end
-
-
-  # Método de clase para pagar un servicio
-  def self.pay_service(name_service, sender_cvu)
-    ActiveRecord::Base.transaction do
-      # Validaciones iniciales
-      service = Service.find_by!(name_service: name_service)
-      amount = service.monthly_amount
-      
-      unless amount > 0
-        raise ActiveRecord::RecordInvalid.new(Transaction.new), "El monto debe ser mayor que cero."
-      end
-
-      sender_account = Account.find_by!(cvu: sender_cvu)
-      
-      unless sender_account.total_balance >= amount
-        raise ActiveRecord::RecordInvalid.new(sender_account), "Saldo insuficiente."
-      end
-
-      # Actualizar saldo
-      sender_account.update!(total_balance: sender_account.total_balance - amount)
-
-      # Crear transacción
       transaction = Transaction.create!(
         no_operation: SecureRandom.uuid,
         value: amount,
-        transaction_type: :pago_servicio,
-        date: Date.current, 
-        source_account: sender_account
+        transaction_type: :deposito,
+        date: Date.current,
+        source_account: account
       )
-      
-      # Registrar servicio pagado
-      PayedService.create!(
-        service_id: service.id,
-        account_id: sender_account.id,
-        pay_date: Date.current
-      )
-
       transaction
     end
-  rescue ActiveRecord::RecordNotFound => e
-    raise StandardError, "Error: #{e.message}"
   rescue ActiveRecord::RecordInvalid => e
     raise StandardError, "Error de validación: #{e.message}"
   rescue => e
     raise StandardError, "Error inesperado: #{e.message}"
   end
-
 end
