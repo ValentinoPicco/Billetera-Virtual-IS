@@ -298,6 +298,7 @@
   .perfil img {
     width: 100px;
     height:100%;
+    display: block;
   }
 
   .dinero {
@@ -437,3 +438,23 @@ label{
   margin: 20px 0;
   font-size: 1.2em;
 }
+
+.perfil{
+  position: relative;
+
+}
+
+.perfil button {
+  position: absolute;
+  top: 45%;
+  left: 40%;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+/* 
+.perfil img:hover {
+  opacity: 0.8;
+  transition: opacity 0.3s;
+  cursor: pointer;
+}  */
