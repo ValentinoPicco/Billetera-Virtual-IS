@@ -61,7 +61,7 @@
         <ul class="ultmov">
           <% @last_transactions.each do |tx| %>
             <% if tx.transaction_type.to_s == 'deposito' %>
-              <li>
+              <li class="movimiento-item">
                 <strong><%= tx.date %></strong>
                 <span class="ingresos">Depósito</span>
                 +$<%= ('%.2f' % (tx.value / 100.0)) %>
@@ -117,6 +117,14 @@
       cvvOculto = !cvvOculto;
       cvvValue.textContent = cvvOculto ? "***" : realCvv;
       cvvIcon.className = cvvOculto ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
+    });
+
+    // ultimos movimientos
+    document.querySelectorAll('.movimiento-item').forEach(item => {
+      item.addEventListener('click', function() {
+        this.classList.add('animar');
+        setTimeout(() => this.classList.remove('animar'), 500); // 500ms de animación
+      });
     });
   });
 </script>
