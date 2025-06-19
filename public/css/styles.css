@@ -382,7 +382,7 @@ p.vence {
 
   .dinero {
     display: flex;
-    gap: 20px; 
+    gap: 100px !important; 
     flex-wrap: wrap; 
     word-break: break-word;
   }
