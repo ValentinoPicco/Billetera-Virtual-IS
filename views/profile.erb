@@ -1,21 +1,36 @@
-
 <div class="container">
     <h2>Perfil de Usuario</h2>
+
+    
 
     <div class="profile-info">
         <p><strong>Nombre:</strong> <%= @user.name %></p>
         <p><strong>Apellido:</strong> <%= @user.surname %></p>
+
+        <div style="display: flex; gap: 12px; margin-bottom: 8px; align-items: baseline;">
+            <span style="white-space: nowrap; font-size: 20px"><strong>Alias:</strong> <%= @account.alias %></span>
+            <span><strong>Modificar:</strong></span>
+            <form action="/profile/alias" method="post" style="display: inline-flex; align-items: center; gap: 4px; margin: 0;">
+                <input type="text" id="alias" name="alias" value="<%= @account.alias %>" style="margin: 0; width: 120px;">
+                <button type="submit" style="margin: 0;">Guardar</button>
+            </form>
+        </div>
+
+        <% if @mensaje %>
+          <div class="success"><%= @mensaje %></div>
+        <% end %>
+        <% if @error %>
+            <div class="error"><%= @error %></div>
+        <% end %>
         <p><strong>Numero de Documento:</strong> <%= @user.dni %></p>
         <p><strong>Teléfono:</strong> <%= @user.tel %></p>
-        <p><strong>Dirección:</strong> <%= @user.address%></p>
+        <p><strong>Dirección:</strong> <%= @user.address %></p>
         <p><strong>Email:</strong> <%= @user.email %></p>
-        <p><strong>Alias:</strong> <%= @account.alias %></p>
     </div>
-
 </div>
 
-    <div class="back-form button">
-        <form action="/home" method="get">
-            <button type="submit"> Volver al menu </button>
-        </form>
-    </div>
+<div class="back-form button">
+    <form action="/home" method="get">
+        <button type="submit"> Volver al menu </button>
+    </form>
+</div>
