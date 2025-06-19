@@ -237,7 +237,7 @@
     background-color: #f8e1ba;
     padding: 15px;
     border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
 
 .div2 {
@@ -246,7 +246,7 @@
     background-color: #f8e1ba;
     padding: 15px;
     border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
 
 p.numero-tarjeta {
@@ -275,7 +275,7 @@ p.vence {
     background-color: #f8e1ba;
     padding: 15px;
     border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
         
 
@@ -313,6 +313,43 @@ p.vence {
 
 .ultmov li:last-child {
     border-bottom: none;
+}
+
+.movimiento-item {
+  transition: background 0.5s;
+  cursor: pointer;
+}
+.movimiento-item.animar {
+  background: #ffe082;
+}
+
+.modal { 
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; 
+    overflow: auto;
+    background: rgba(0,0,0,0.4);
+}
+
+.modal-content { 
+    background: #FBB129; 
+    margin: 10% auto; 
+    padding: 20px; 
+    border-radius: 8px; 
+    width: 500px; 
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.close { 
+    position: absolute; 
+    right: 10px; 
+    top: 10px; 
+    cursor: pointer; 
+    font-size: 24px;
 }
 
 .ingresos {
