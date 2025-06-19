@@ -10,6 +10,7 @@ require_relative 'models/card'
 require_relative 'models/payed_service'
 require_relative 'models/transaction'
 require_relative 'models/pig'
+require_relative 'models/account_contact'
 
 class App < Sinatra::Application
 
@@ -101,37 +102,79 @@ class App < Sinatra::Application
     erb :home
   end
   
+  post '/contacts' do
+  user = User.find(session[:user_id])
+  account = user.account
+
+  contact = Account.find_by(alias: params[:new_contact_alias])
+
+  if contact.nil?
+    @error = "No se encontró la cuenta con ese alias."
+  elsif contact.id == account.id
+    @error = "No podés agregarte a vos mismo como contacto."
+  else
+    begin
+      AccountContact.create!(account: account, contact_account: contact)
+      @success = "Contacto agregado exitosamente."
+    rescue ActiveRecord::RecordInvalid => e
+      @error = "Error al agregar contacto: #{e.message}"
+    rescue ActiveRecord::RecordNotUnique
+      @error = "Ese contacto ya fue agregado."
+    end
+  end
+
+  @user = user
+  @contacts = account.contact_accounts
+  erb :transfer
+end
+
   get '/transfer' do 
     @user = User.find(session[:user_id])
+    @contacts = @user.account.contact_accounts
     erb :transfer
   end
 
-  post '/transfer' do
-    sender_account = User.find(session[:user_id]).account
-    receiver_account = Account.find_by(alias: params[:dest_alias])
-    amount = (params[:amount].to_f * 100).round
-
-    if receiver_account.nil?
-      @error = "Cuenta destino no encontrada."
-    elsif receiver_account == sender_account
-      @error = "No podés transferirte a vos mismo."
-    elsif amount <= 0
-      @error = "El monto debe ser mayor a cero."
-    elsif sender_account.total_balance < amount
-      @error = "Saldo insuficiente."
-    else
-      # delegamos a Transaction
-      begin
-        Transaction.transfer_money_by_alias(sender_account.alias, receiver_account.alias, amount)
-        @success = "Transferencia realizada con éxito."
-      rescue => e
-        @error = "Ocurrió un error: #{e.message}"
-      end
-    end
-
+  get '/transfer/otro' do
     @user = User.find(session[:user_id])
-    erb :transfer
+    erb :transfer_manual
   end
+
+
+post '/transfer' do
+  user = User.find(session[:user_id])
+  sender_account = user.account
+
+  # Soporta alias por contacto o manual
+  dest_alias = params[:dest_alias_manual] || params[:dest_alias]
+  receiver_account = Account.find_by(alias: dest_alias)
+  amount = (params[:amount].to_f * 100).round
+
+  if receiver_account.nil?
+    @error = "Cuenta destino no encontrada."
+  elsif receiver_account == sender_account
+    @error = "No podés transferirte a vos mismo."
+  elsif amount <= 0
+    @error = "El monto debe ser mayor a cero."
+  elsif sender_account.total_balance < amount
+    @error = "Saldo insuficiente."
+  else
+    begin
+      Transaction.transfer_money_by_alias(sender_account.alias, receiver_account.alias, amount)
+      @success = "Transferencia realizada con éxito."
+
+      # Guardar como contacto si corresponde
+      if params[:save_contact] && !sender_account.contact_accounts.include?(receiver_account)
+        AccountContact.create!(account: sender_account, contact_account: receiver_account)
+      end
+    rescue => e
+      @error = "Ocurrió un error: #{e.message}"
+    end
+  end
+
+  @user = user
+  @contacts = @user.account.contact_accounts
+  erb :transfer
+end
 
   get '/insert_money'do
     @user = User.find(session[:user_id])

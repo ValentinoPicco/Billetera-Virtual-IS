@@ -1,5 +1,5 @@
 <div class="container" style="display: flex; flex-direction: column; min-height: 70vh; max-width: 600px; margin: 0 auto; padding: 20px;">
-  <h2>Transferencia</h2>
+  <h2>Transferir a nueva cuenta</h2>
 
   <% if @error %>
     <div class="alert alert-error" style="margin-bottom: 10px;"><%= @error %></div>
@@ -12,12 +12,8 @@
   <div class="form-container" style="flex-grow: 1;">
     <form action="/transfer" method="post" class="money-form" style="display: flex; flex-direction: column; gap: 10px;">
       <div class="form-group" style="margin-bottom: 10px;">
-        <label for="dest_alias">Elegir contacto:</label>
-        <select name="dest_alias" id="dest_alias" required>
-          <% @contacts.each do |contact| %>
-            <option value="<%= contact.alias %>"><%= contact.user.name %> - <%= contact.alias %></option>
-          <% end %>
-        </select>
+        <label for="dest_alias_manual">Alias destino:</label>
+        <input type="text" name="dest_alias_manual" id="dest_alias_manual" required>
       </div>
 
       <div class="form-group" style="margin-bottom: 10px;">
@@ -25,25 +21,21 @@
         <input type="number" name="amount" id="amount" min="0.01" step="0.01" required>
       </div>
 
+      <div class="form-group" style="margin-bottom: 10px;">
+        <input type="checkbox" id="save_contact" name="save_contact">
+        <label for="save_contact">Guardar como contacto</label>
+      </div>
+
       <div class="form-actions">
         <input type="submit" value="Transferir" style="width: 100%;">
       </div>
-      <div class= "acciones">
-        <form action="/transfer/otro" method="get">
-      <button type="submit" style="width: 100%;">Transferir a nueva cuenta</button>
     </form>
-    </form>
-  
-    
-  </div>
-   
   </div>
 
-  
 </div>
+
 <div class="back-form button">
     <form action="/transfer" method="get">
-        <button type="submit"> Volver al menu </button>
+        <button type="submit"> Volver a transferencias </button>
     </form>
 </div>
-  
