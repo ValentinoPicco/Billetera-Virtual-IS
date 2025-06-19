@@ -60,34 +60,42 @@
       <div class="movimientos">
         <ul class="ultmov">
           <% @last_transactions.each do |tx| %>
-            <% if tx.transaction_type.to_s == 'deposito' %>
-              <li class="movimiento-item">
+            <% tipo = tx.transaction_type.to_s.tr('_', ' ').split.map(&:capitalize).join(' ') %>
+            <% monto = ('%.2f' % (tx.value / 100.0)) %>
+            <% signo = (tx.transaction_type.to_s == 'deposito' || tx.target_account_id == @user.account.id) ? '+' : '-' %>
+            <% clase = (tx.transaction_type.to_s == 'deposito' || tx.target_account_id == @user.account.id) ? 'ingresos' : 'egresos' %>
+            <li class="movimiento-item"
+                data-no-operation="<%= tx.no_operation %>"
+                data-value="<%= monto %>"
+                data-date="<%= tx.date %>"
+                data-transaction-type="<%= tipo %>"
+                data-reason="<%= tx.reason %>">
                 <strong><%= tx.date %></strong>
-                <span class="ingresos">Depósito</span>
-                +$<%= ('%.2f' % (tx.value / 100.0)) %>
-              </li>
-            <% elsif tx.source_account_id == @user.account.id %>
-              <li>
-                <strong><%= tx.date %></strong>
-                <span class="egresos"><%= tx.transaction_type.to_s.tr('_', ' ').split.map(&:capitalize).join(' ') %></span>
-                -$<%= ('%.2f' % (tx.value / 100.0)) %>
-              </li>
-            <% elsif tx.target_account_id == @user.account.id %>
-              <li>
-                <strong><%= tx.date %></strong>
-                <span class="ingresos"><%= tx.transaction_type.to_s.tr('_', ' ').split.map(&:capitalize).join(' ') %></span>
-                +$<%= ('%.2f' % (tx.value / 100.0)) %>
-              </li>
-            <% end %>
+                <span class="<%= clase %>"><%= tipo %></span>
+                <%= signo %>$<%= monto %>
+            </li>
+            
+            
           <% end %>
         </ul>
-      </div>
+        <div id="modal-movimiento" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" id="cerrar-modal">&times;</span>
+            <h2>Detalle del Movimiento</h2>
+            <p id="modal-no-operation"></p>
+            <p id="modal-value"></p>
+            <p id="modal-date"></p>
+            <p id="modal-transaction-type"></p>
+            <p id="modal-reason"></p>
+            </div>
+        </div>
+        </div>
     </div>
   </div>
 </section>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     // Montos
     const monto = document.getElementById("monto");
     const montoTotal = document.getElementById("monto_total");
@@ -123,8 +131,22 @@
     document.querySelectorAll('.movimiento-item').forEach(item => {
       item.addEventListener('click', function() {
         this.classList.add('animar');
-        setTimeout(() => this.classList.remove('animar'), 500); // 500ms de animación
+        setTimeout(() => this.classList.remove('animar'), 200);
+        document.getElementById('modal-no-operation').textContent = "N° Operación: " + item.dataset.noOperation;
+        document.getElementById('modal-value').textContent = "Monto: " + item.dataset.value;
+        document.getElementById('modal-date').textContent = "Fecha: " + item.dataset.date;
+        document.getElementById('modal-transaction-type').textContent = "Tipo: " + item.dataset.transactionType;
+        document.getElementById('modal-reason').textContent = "Motivo: " + (item.dataset.reason || "Sin motivo");
+        document.getElementById('modal-movimiento').style.display = 'block';
       });
     });
-  });
+    document.getElementById('cerrar-modal').onclick = function() {
+        document.getElementById('modal-movimiento').style.display = 'none';
+    };
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('modal-movimiento')) {
+            document.getElementById('modal-movimiento').style.display = 'none';
+        }
+    };
+});
 </script>
