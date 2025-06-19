@@ -249,6 +249,25 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+p.numero-tarjeta {
+    font-size: 20px;
+    letter-spacing: 2px;
+}
+
+p.cvv {
+    font-size: 20px;
+    letter-spacing: 2px;
+}
+
+p.vence {
+    font-size: 20px;
+    letter-spacing: 2px;
+}
+
+.sin-espaciado {
+  letter-spacing: normal;
+}
+
 .div3 {
     grid-row: span 2 / span 2;
     grid-column-start: 2;
