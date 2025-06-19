@@ -504,7 +504,32 @@ label{
   background-color: #3e7a3e;
 }
 
+.ultimos_movs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
+.ultimos_movs button {
+  margin:15px;
+  padding:10px;
+  background-color: #018d13;
+  color: white;
+  font-weight: 500;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ultimos_movs button:hover {
+  background-color: #3e7a3e;
+}
+
+.movs {
+  display: flex;
+  justify-content: center;
+}
 
 .profile-info {
   padding: 0px 0px 0px 110px;

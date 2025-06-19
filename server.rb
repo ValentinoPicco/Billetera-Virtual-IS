@@ -337,4 +337,12 @@ end
     @account = account
     erb :profile
   end
+
+  get '/all_transactions' do
+    @user = User.find(session[:user_id])
+    @last_transactions = (@user.account.source_transactions + @user.account.target_transactions).sort_by { |tx| [tx.date, tx.created_at] }.reverse()
+    pigs_total = Pig.where(account_id: @user.account.id).sum(:total_balance)
+    @dinero_total = (@user.account.total_balance || 0) + (pigs_total || 0)
+    erb :all_transactions
+  end
 end
