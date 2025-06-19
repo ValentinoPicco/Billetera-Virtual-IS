@@ -411,12 +411,29 @@ p.vence {
   }
 
   .container {
-    width: 600px;   
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;   
     height: 100%;  
     margin: 0 auto;
     padding: 40px;  
-    
+    background-color: #f8e1ba;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    margin: 50px auto;
+      
   }
+
+
+  .container * {
+    max-width: 100%;
+  }
+
+
+
 h2 {
   text-align: center;
 }
@@ -532,17 +549,17 @@ label{
 }
 
 .profile-info {
-  padding: 0px 0px 0px 110px;
   margin: 40px;
-  
   display: flex;
   flex-direction: column;
-  align-items: left;
+  justify-content: center;
+  width: 100%;
 }
 
 .profile-info p {
   margin: 20px 0;
   font-size: 1.2em;
+  width: 100%;
 }
 
 .perfil{
