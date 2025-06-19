@@ -35,6 +35,11 @@
   
         <div class="div2">
             <h3>Tarjeta</h3>
+                <% if @user.account.card %>
+                    <p>Número de tarjeta: <%= @user.account.card.no_card%></p>
+                <% else %>
+                    <p>No tienes tarjeta asociada.</p>
+                <% end %>
         </div>
         <div class="div3">
             <h3>Últimos Movimientos</h3>
