@@ -96,7 +96,7 @@ class App < Sinatra::Application
     redirect '/' unless session[:user_id]
 
     @user = User.find(session[:user_id])
-    @last_transactions = @user.account&.source_transactions&.order(date: :desc)&.limit(5) || []
+   @last_transactions = (@user.account.source_transactions + @user.account.target_transactions).sort_by { |tx| [tx.date, tx.created_at] }.reverse.first(5)
     erb :home
   end
   
