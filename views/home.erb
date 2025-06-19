@@ -1,4 +1,4 @@
-<section class="menu">
+`<section class="menu">
   <div class="parent">
     <div class="div1">
       <h3>Dinero Total</h3>
@@ -66,6 +66,7 @@
         <ul class="ultmov">
           <% @last_transactions.each do |tx| %>
             <% tipo = tx.transaction_type.to_s.tr('_', ' ').split.map(&:capitalize).join(' ') %>
+            <% tipo = 'Transferencia Recibida' if tx.transaction_type.to_s == 'transferencia_enviada' and tx.target_account_id == @user.account.id %>
             <% monto = ('%.2f' % (tx.value / 100.0)) %>
             <% signo = (tx.transaction_type.to_s == 'deposito' || tx.target_account_id == @user.account.id) ? '+' : '-' %>
             <% clase = (tx.transaction_type.to_s == 'deposito' || tx.target_account_id == @user.account.id) ? 'ingresos' : 'egresos' %>
@@ -159,3 +160,4 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 });
 </script>
+`
