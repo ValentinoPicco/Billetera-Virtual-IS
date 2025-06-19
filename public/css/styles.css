@@ -282,22 +282,39 @@
     font-size: 16px;
   }
   
-  .monto.positivo {
-    color: green;
-    font-weight: bold;
-    margin-left: 10px;
-  }
+.ultmov {
+    margin-top: 15px;
+    list-style-type: none;
+}
+
+.ultmov li {
+    border-bottom: 1px solid #ccc;
+    padding: 8px 0;
+}
+
+.ultmov li:last-child {
+    border-bottom: none;
+}
+
+.ingresos {
+  color: green;
+  font-weight: bold;
+  margin-left: 10px;
+  margin-right: 10px;
+}
   
-  .monto.negativo {
+.egresos {
     color: red;
     font-weight: bold;
     margin-left: 10px;
-  }
+    margin-right: 10px;
+}
 
   
   .perfil img {
     width: 100px;
     height:100%;
+    display: block;
   }
 
   .dinero {
@@ -316,11 +333,12 @@
   }
 
   .container {
-  width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
+    width: 600px;   
+    height: 100%;  
+    margin: 0 auto;
+    padding: 40px;  
+    
+  }
 h2 {
   text-align: center;
 }
@@ -422,6 +440,41 @@ label{
 .dinero button:hover{
   background-color: #3e7a3e;
 }
+
+.profile-info {
+  padding: 0px 0px 0px 110px;
+  margin: 40px;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.profile-info p {
+  margin: 20px 0;
+  font-size: 1.2em;
+}
+
+.perfil{
+  position: relative;
+
+}
+
+.perfil button {
+  position: absolute;
+  top: 45%;
+  left: 40%;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+/* 
+.perfil img:hover {
+  opacity: 0.8;
+  transition: opacity 0.3s;
+  cursor: pointer;
+}  */
+
 
 .logout-button button {
   margin:15px;

@@ -1,6 +1,6 @@
 
 <div class="container">
-  <h2>Ingresar Dinero</h2>
+  <h2>Pagar Servicio</h2>
 
   <% if @error %>
     <div class="alert alert-error"><%= @error %></div>
@@ -11,14 +11,19 @@
   <% end %>
 
   <div class="form-container">
-    <form action="/insert_money" method="post" class="money-form">
+    <form action="/service" method="post" class="money-form">
       <div class="form-group">
-        <label for="amount">Monto a ingresar (en pesos):</label>
-        <input type="number" name="amount" id="amount" min="0.01" step="0.01" required>
+        <label for="n_ser"> Servicio a pagar: </label>
+        <select name="n_ser" id="n_ser" required>
+        <% @services.each do |service| %>
+            <option value="<%= service.name_service %>"><%= service.name_service %> - $<%= service.monthly_amount/100 %></option>
+        <% end %>
+        </select>
+
       </div>
 
       <div class="form-actions">
-        <input type="submit" value="Ingresar">
+        <input type="submit" value="Pagar">
       </div>
     </form>
 

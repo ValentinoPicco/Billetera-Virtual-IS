@@ -96,7 +96,7 @@ class App < Sinatra::Application
     redirect '/' unless session[:user_id]
 
     @user = User.find(session[:user_id])
-    @last_transactions = @user.account&.source_transactions&.order(date: :desc)&.limit(5) || []
+   @last_transactions = (@user.account.source_transactions + @user.account.target_transactions).sort_by { |tx| [tx.date, tx.created_at] }.reverse.first(5)
     erb :home
   end
   
@@ -108,7 +108,7 @@ class App < Sinatra::Application
   post '/transfer' do
     sender_account = User.find(session[:user_id]).account
     receiver_account = Account.find_by(alias: params[:dest_alias])
-    amount = params[:amount].to_i
+    amount = (params[:amount].to_f * 100).round
 
     if receiver_account.nil?
       @error = "Cuenta destino no encontrada."
@@ -139,7 +139,7 @@ class App < Sinatra::Application
 
   post '/insert_money' do
     account = User.find(session[:user_id]).account
-    amount = params[:amount].to_i
+    amount = (params[:amount].to_f * 100).round
 
     if account.nil? 
       @error = "Cuenta no encontrada."
@@ -160,6 +160,42 @@ class App < Sinatra::Application
   post '/logout' do
     session.clear
     redirect '/'
+  end
+
+  get '/service' do 
+    @user = User.find(session[:user_id])
+    @services = Service.all
+    erb :service
+  end
+
+  post '/service' do
+    sender_account = User.find(session[:user_id]).account
+    service = Service.find_by(name_service: params[:n_ser])
+
+    if service.nil?
+      @error = "El servicio no se encuentra disponible."
+    elsif sender_account.total_balance < service.monthly_amount
+      @error = "Saldo insuficiente."
+    else
+      begin
+        Transaction.pay_service(service.name_service, sender_account.cvu)
+        @success = "Pago realizado con éxito."
+      rescue => e
+        @error = "Ocurrió un error: #{e.message}"
+      end
+    end
+
+    @user = User.find(session[:user_id])
+    @services = Service.all
+    erb :service
+  end
+
+  get '/profile' do
+    redirect '/' unless session[:user_id]
+
+    @user = User.find(session[:user_id])
+    @account = @user.account
+    erb :profile
   end
 
 
