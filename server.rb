@@ -163,9 +163,12 @@ post '/transfer' do
     @error = "Saldo insuficiente."
   else
     begin
-      Transaction.transfer_money_by_alias(sender_account.alias, receiver_account.alias, amount)
+      transaction = Transaction.transfer_money_by_alias(sender_account.alias, receiver_account.alias, amount)
+      reason = params[:reason]
+      if reason != ""
+        transaction.update(reason: reason)
+      end
       @success = "Transferencia realizada con éxito."
-
       # Guardar como contacto si corresponde
       if params[:save_contact] && !sender_account.contact_accounts.include?(receiver_account)
         AccountContact.create!(account: sender_account, contact_account: receiver_account)
