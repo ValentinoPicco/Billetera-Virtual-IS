@@ -1,7 +1,7 @@
 class CreateCard < ActiveRecord::Migration[8.0]
   def change
     create_table :cards do |t|
-      t.integer :no_card
+      t.string :no_card
       t.references :account_holder, foreign_key: { to_table: :accounts }
       t.integer :cvv
       t.string :type
