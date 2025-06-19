@@ -147,11 +147,20 @@
   .register a:hover {
     color: #4c924c;
   }
-  
+
   .footer {
-    background: #f59f00;
-    height: 50px;
-  }
+  background: linear-gradient(90deg, #f59f00 0%, #ffbe45 100%);
+  color: #222;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: auto;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  padding: 0 20px;
+}
 
 
 
@@ -212,22 +221,13 @@
   
 
 
-
-.parent {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    gap: 8px;
-}
-    
-
-
 .parent {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
     gap: 20px;
     min-width: 768px;
+    max-height: 700px;
 }
     
 
