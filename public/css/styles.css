@@ -491,3 +491,47 @@ label{
   left: 10px;
   top: 15px;
 }
+
+
+.tarjeta {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #1f1f1f, #3e3e3e);
+    min-width: 400px;
+    height: 230px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .tarjeta-no {
+    font-size: 22px;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .tarjeta-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+  }
+  
+  .tarjeta-info p {
+    margin: 0;
+    font-size: 14px;
+  }
+  
+  .tarjeta-holder {
+    text-align: right;
+    font-size: 16px;
+    font-weight: bold;
+    padding-right: 10px;
+  }
+  
+
+
+

@@ -28,10 +28,18 @@
                 </div>
             </div>    
         </div>
-  
         <div class="div2">
             <h3>Tarjeta</h3>
+            <div class="tarjeta">
+                <p class="tarjeta-no"><%= @user.account.card.no_card %></p>
+                <div class="tarjeta-info">
+                    <p><strong>Vto:</strong> <%= @user.account.card.exp_date %></p>
+                    <p><strong>CVV:</strong> <%= @user.account.card.cvv %></p>
+                </div>
+            <p class="tarjeta-holder"><%= @user.account.card.holder_name %></p>
+            </div>
         </div>
+      
         <div class="div3">
             <h3>Últimos Movimientos</h3>
             <div class="movimientos">
