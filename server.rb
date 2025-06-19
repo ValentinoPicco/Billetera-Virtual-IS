@@ -198,5 +198,20 @@ class App < Sinatra::Application
     erb :profile
   end
 
+  post '/profile/alias' do
+    user = User.find(session[:user_id])
+    account = user.account
+    nuevo_alias = params[:alias]
 
+    if Account.where(alias: nuevo_alias).exists?
+      @error = "El alias ya está en uso"
+    else
+      account.update(alias: nuevo_alias)
+      @mensaje = "Alias actualizado correctamente"
+    end
+    
+    @user = user
+    @account = account
+    erb :profile
+  end
 end
