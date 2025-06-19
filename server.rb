@@ -54,11 +54,17 @@ class App < Sinatra::Application
     )
 
     if user.save
+      i = 0
+      unique_alias = loop do
+        generated_alias = name + surname + i.to_s
+        i=i+1
+        break generated_alias unless Account.exists?(alias: generated_alias)
+      end
       begin
         Account.create!(
           user: user,
           cvu: generate_unique_cvu,
-          alias: user.name + user.surname,
+          alias: unique_alias,
           total_balance: 0,
           creation_date: Time.now,
           password: user.password

@@ -18,7 +18,7 @@ name = "mateo"
 surname = "Llorente"
 dni = "46453070"
 tel = "3585487"
-email = "teo25@gmail.com"
+email = "teo@gmail.com"
 address = "lavalle 1100"
 password = '12345678'
 
@@ -37,10 +37,16 @@ else
     password: password
   )
   if user.save
+    i = 0
+    unique_alias = loop do
+      generated_alias = name + surname + i.to_s
+      i=i+1
+      break generated_alias unless Account.exists?(alias: generated_alias)
+    end
     account = Account.create!(
       user: user,
       cvu: generate_unique_cvu,
-      alias: "#{name.downcase}#{surname.downcase}",
+      alias: unique_alias,
       total_balance: 0,
       creation_date: Time.now,
       password: password
@@ -78,10 +84,16 @@ else
     password: password
   )
   if user.save
+    i = 0
+    unique_alias = loop do
+      generated_alias = name + surname + i.to_s
+      i=i+1
+      break generated_alias unless Account.exists?(alias: generated_alias)
+    end
     account = Account.create!(
       user: user,
       cvu: generate_unique_cvu,
-      alias: "#{name.downcase}#{surname.downcase}",
+      alias: unique_alias,
       total_balance: 0,
       creation_date: Time.now,
       password: password
@@ -119,10 +131,16 @@ else
     password: password
   )
   if user.save
+    i = 0
+    unique_alias = loop do
+      generated_alias = name + surname + i.to_s
+      i=i+1
+      break generated_alias unless Account.exists?(alias: generated_alias)
+    end
     account = Account.create!(
       user: user,
       cvu: generate_unique_cvu,
-      alias: "#{name.downcase}#{surname.downcase}",
+      alias: unique_alias,
       total_balance: 0,
       creation_date: Time.now,
       password: password
@@ -160,10 +178,16 @@ else
     password: password
   )
   if user.save
+    i = 0
+    unique_alias = loop do
+      generated_alias = name + surname + i.to_s
+      i=i+1
+      break generated_alias unless Account.exists?(alias: generated_alias)
+    end
     account = Account.create!(
       user: user,
       cvu: generate_unique_cvu,
-      alias: "#{name.downcase}#{surname.downcase}",
+      alias: unique_alias,
       total_balance: 0,
       creation_date: Time.now,
       password: password
