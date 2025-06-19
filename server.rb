@@ -3,6 +3,7 @@ require 'sinatra/base'
 require 'sinatra/reloader' if Sinatra::Base.environment == :development
 require 'sinatra/activerecord'
 require 'logger'
+require 'bcrypt'
 require_relative 'models/user'
 require_relative 'models/account'
 require_relative 'models/service'
@@ -11,6 +12,7 @@ require_relative 'models/payed_service'
 require_relative 'models/transaction'
 require_relative 'models/pig'
 require_relative 'models/account_contact'
+
 
 class App < Sinatra::Application
 
