@@ -331,7 +331,7 @@ p.vence {
 
   
   .perfil img {
-    width: 100px;
+    width: 130px;
     height:100%;
     display: block;
   }
@@ -397,7 +397,7 @@ h2 {
   padding: 10px;
   width: 100%;
   border: none;
-  background-color: #4c924c;
+  background-color: #018d13;
   color: white;
   border-radius: 5px;
   cursor: pointer;
@@ -432,7 +432,7 @@ label{
 .acciones button {
   margin:15px;
   padding:10px;
-  background-color: #4c924c;
+  background-color: #018d13;
   color: white;
   font-weight: 500;
   border: none;
@@ -468,26 +468,29 @@ label{
 
 .perfil button {
   position: absolute;
-  top: 40%;
-  left: 30%;
+  top: 42%;
+  left: 35%;
   border: none;
   background-color: transparent;
   cursor: pointer;
 }
 
+.perfil button:hover {
+  filter: brightness(1.1);
+  transition: filter 0.3s;
+}
 
 
 .perfil img:hover {
   filter: brightness(1.1);
   transition: filter 0.3s;
   transform: scale(1.1);
-  cursor: pointer;
 }
 
 .logout-button button {
   margin:15px;
   padding:10px;
-  background-color: #4c924c;
+  background-color: #018d13;
   color: black;
   font-weight: 500;
   border: 1px solid black;
