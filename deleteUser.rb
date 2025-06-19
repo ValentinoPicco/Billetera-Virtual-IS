@@ -1,6 +1,6 @@
 require_relative 'server'
 
-dni = 46453070
+dni = 45935762
 user = User.find_by(dni: dni)
 
 if user
@@ -17,6 +17,10 @@ if user
 
     # Destruir chanchitos (pigs)
     account.pigs.find_each(&:destroy)
+    PayedService.where(account_id: account.id).destroy_all
+    AccountContact.where(account: account.id).destroy_all
+    AccountContact.where(contact_account: account.id).destroy_all
+    
 
     account.destroy
   end
