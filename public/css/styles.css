@@ -319,7 +319,7 @@
 
   .dinero {
     display: flex;
-    justify-content: space-between;
+    gap: 100px  !important ;
   }
 
   .dinero p {
@@ -426,21 +426,7 @@ label{
   background-color: #3e7a3e;
 }
 
-.dinero button{
-  margin:5px;
-  padding:10px;
-  background-color: #4c924c;
-  color: white;
-  font-weight:500;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
 
-.dinero button:hover{
-  background-color: #3e7a3e;
-}
 
 .profile-info {
   padding: 0px 0px 0px 110px;
@@ -463,19 +449,21 @@ label{
 
 .perfil button {
   position: absolute;
-  top: 45%;
-  left: 40%;
+  top: 40%;
+  left: 30%;
   border: none;
   background-color: transparent;
   cursor: pointer;
 }
-/* 
-.perfil img:hover {
-  opacity: 0.8;
-  transition: opacity 0.3s;
-  cursor: pointer;
-}  */
 
+
+
+.perfil img:hover {
+  filter: brightness(1.1);
+  transition: filter 0.3s;
+  transform: scale(1.1);
+  cursor: pointer;
+}
 
 .logout-button button {
   margin:15px;
@@ -492,6 +480,9 @@ label{
   top: 15px;
 }
 
+.logout-button button:hover {
+  background-color: #3e7a3e;
+}
 
 .tarjeta {
     display: flex;
@@ -506,6 +497,7 @@ label{
     height: 230px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
     font-family: 'Poppins', sans-serif;
+    margin-top: 20px;
   }
   
   .tarjeta-no {
@@ -564,4 +556,7 @@ label{
   .ojito:hover i {
     color: #495057; 
   }
+
+  
+
   
