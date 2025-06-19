@@ -10,7 +10,7 @@ class Card < ActiveRecord::Base
   private
 
   def set_holder_name
-    if holder_name.blank?
+    if holder_name.blank? && account_holder && account_holder.user
       self.holder_name = "#{account_holder.user.name} #{account_holder.user.surname}"
     end
   end

@@ -55,7 +55,6 @@ class Account < ActiveRecord::Base
       cvv: rand(100..999),
       creation_date: Date.current.to_s,
       exp_date: (Date.current >> 48).to_s, # 4 años después
-      holder_name: "#{user.name} #{user.surname}"
     )
   end
 end
