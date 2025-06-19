@@ -32,15 +32,24 @@
             <h3>Últimos Movimientos</h3>
             <div class="movimientos">
                 <ul class="ultmov">
-                    <% @last_transactions.each do |tx| %>
-                        <% if tx.source_account_id == @user.account.id %>
+                <% @last_transactions.each do |tx| %>
+                    <% if tx.transaction_type.to_s == 'deposito' %>
                         <li>
-                            <strong><%= tx.date %></strong> <span class="egresos"><%= tx.transaction_type.to_s.tr('_', ' ').split.map(&:capitalize).join(' ') %></span> -$<%= ('%.2f' % (tx.value / 100.0)) %>
-
+                            <strong><%= tx.date %></strong>
+                            <span class="ingresos">Depósito</span>
+                            +$<%= ('%.2f' % (tx.value / 100.0)) %>
                         </li>
-                        <% elsif tx.target_account_id == @user.account.id%>
+                        <% elsif tx.source_account_id == @user.account.id %>
                         <li>
-                            <strong><%= tx.date %></strong> <span class="ingresos"><%= tx.transaction_type.to_s.tr('_', ' ').split.map(&:capitalize).join(' ') %></span> <%= ('%.2f' % (tx.value / 100.0)) %>
+                            <strong><%= tx.date %></strong>
+                            <span class="egresos"><%= tx.transaction_type.to_s.tr('_', ' ').split.map(&:capitalize).join(' ') %></span>
+                            -$<%= ('%.2f' % (tx.value / 100.0)) %>
+                        </li>
+                        <% elsif tx.target_account_id == @user.account.id %>
+                        <li>
+                            <strong><%= tx.date %></strong>
+                            <span class="ingresos"><%= tx.transaction_type.to_s.tr('_', ' ').split.map(&:capitalize).join(' ') %></span>
+                            +$<%= ('%.2f' % (tx.value / 100.0)) %>
                         </li>
                         <% end %>
                     <% end %>
