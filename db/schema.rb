@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_19_195000) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_19_210000) do
   create_table "account_contacts", force: :cascade do |t|
     t.integer "account_id", null: false
     t.integer "contact_account_id", null: false
@@ -27,7 +27,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_19_195000) do
     t.string "alias"
     t.integer "total_balance"
     t.date "creation_date"
-    t.string "password", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_accounts_on_user_id"

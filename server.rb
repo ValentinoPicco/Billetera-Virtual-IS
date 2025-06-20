@@ -68,8 +68,7 @@ class App < Sinatra::Application
           cvu: generate_unique_cvu,
           alias: unique_alias,
           total_balance: 0,
-          creation_date: Time.now,
-          password: user.password
+          creation_date: Time.now
         )
 
         session[:user_id] = user.id

@@ -15,7 +15,6 @@ class Account < ActiveRecord::Base
   validates :alias, presence: true, uniqueness: true
   validates :total_balance, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :creation_date, presence: true
-  validates :password, presence: true, length: { minimum: 6 }
 
   after_create :create_default_card
 
@@ -54,7 +53,8 @@ class Account < ActiveRecord::Base
       no_card: SecureRandom.random_number(10**16).to_s.rjust(16, '0'),
       cvv: rand(100..999),
       creation_date: Date.current.to_s,
-      exp_date: (Date.current >> 48).to_s, # 4 años después
+      exp_date: (Date.current >> 48).to_s # 4 años después
+      # No pasar holder_name aquí, dejar que lo asigne el callback de Card
     )
   end
 end
