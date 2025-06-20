@@ -146,7 +146,8 @@ class Transaction < ActiveRecord::Base
         value: amount,
         transaction_type: :pago_servicio,
         date: Date.current, 
-        source_account: sender_account
+        source_account: sender_account,
+        skip_saldo_validation: true
       )
       
       # Registrar servicio pagado
