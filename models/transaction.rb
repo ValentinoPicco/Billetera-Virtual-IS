@@ -58,7 +58,8 @@ class Transaction < ActiveRecord::Base
         transaction_type: :transferencia_enviada, # Usamos el enum definido
         date: Date.current, 
         source_account: sender_account, 
-        target_account: receiver_account
+        target_account: receiver_account,
+        skip_saldo_validation: true
       )
 
       # Retornar la transacción creada si todo fue exitoso
@@ -104,7 +105,8 @@ class Transaction < ActiveRecord::Base
         transaction_type: :transferencia_enviada,
         date: Date.current,
         source_account: sender_account,
-        target_account: receiver_account
+        target_account: receiver_account,
+        skip_saldo_validation: true
       )
 
       transaction
@@ -188,7 +190,15 @@ class Transaction < ActiveRecord::Base
     raise StandardError, "Error inesperado: #{e.message}"
   end
 
+  attr_accessor :skip_saldo_validation
 
+  validate :saldo_suficiente, unless: :skip_saldo_validation
+
+  def saldo_suficiente
+    if source_account && source_account.total_balance < value.to_i
+      errors.add(:base, "Saldo insuficiente en la cuenta del remitente.")
+    end
+  end
 
 
 end

@@ -12,7 +12,6 @@ RSpec.describe Transaction do
       alias: "alice.cuenta",
       total_balance: 10000,
       creation_date: Date.today,
-      password: "clave123"
     )
   end
 
@@ -23,7 +22,6 @@ RSpec.describe Transaction do
       alias: "bob.cuenta",
       total_balance: 50000,
       creation_date: Date.today,
-      password: "clave456"
     )
   end
 
@@ -82,7 +80,6 @@ RSpec.describe Transaction do
       alias: "clara.cuenta",
       total_balance: 30000,
       creation_date: Date.today,
-      password: "clave789"
     )
   end
 
@@ -93,7 +90,6 @@ RSpec.describe Transaction do
       alias: "david.cuenta",
       total_balance: 40000,
       creation_date: Date.today,
-      password: "clave321"
     )
   end
 
@@ -104,7 +100,6 @@ RSpec.describe Transaction do
       alias: "eva.cuenta",
       total_balance: 60000,
       creation_date: Date.today,
-      password: "clave654"
     )
   end
 
@@ -115,7 +110,6 @@ RSpec.describe Transaction do
       alias: "fernando.cuenta",
       total_balance: 25000,
       creation_date: Date.today,
-      password: "clave987"
     )
   end
 
