@@ -6,7 +6,6 @@ class CreateAccounts < ActiveRecord::Migration[8.0]
       t.string :alias, null: false
       t.integer :total_balance
       t.date :creation_date
-      t.string :password, null: false
       t.timestamps
     end
   end
