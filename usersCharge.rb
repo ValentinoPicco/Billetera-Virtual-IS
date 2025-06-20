@@ -48,8 +48,7 @@ else
       cvu: generate_unique_cvu,
       alias: unique_alias,
       total_balance: 0,
-      creation_date: Time.now,
-      password: password
+      creation_date: Time.now
     )
 
     # Les damos dinero de prueba
@@ -95,8 +94,7 @@ else
       cvu: generate_unique_cvu,
       alias: unique_alias,
       total_balance: 0,
-      creation_date: Time.now,
-      password: password
+      creation_date: Time.now
     )
 
     # Les damos dinero de prueba
@@ -142,8 +140,7 @@ else
       cvu: generate_unique_cvu,
       alias: unique_alias,
       total_balance: 0,
-      creation_date: Time.now,
-      password: password
+      creation_date: Time.now
     )
 
     # Les damos dinero de prueba
@@ -189,8 +186,7 @@ else
       cvu: generate_unique_cvu,
       alias: unique_alias,
       total_balance: 0,
-      creation_date: Time.now,
-      password: password
+      creation_date: Time.now
     )
 
     # Les damos dinero de prueba
