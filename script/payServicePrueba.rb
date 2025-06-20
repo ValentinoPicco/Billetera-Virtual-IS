@@ -1,5 +1,5 @@
 # payServicePrueba.rb
-require_relative 'server'
+require_relative '../server'
 
 user = User.find_or_create_by!(dni: "12345678") do |u|
   u.name = "John"
@@ -27,9 +27,8 @@ unless account
     user: user, 
     cvu: 1234567890123456,
     alias: "mybankaccount",
-    total_balance: 50000,
-    creation_date: Date.current, 
-    password: "accountpassword123" 
+    total_balance: 5000000,
+    creation_date: Date.current
   )
 end
 
