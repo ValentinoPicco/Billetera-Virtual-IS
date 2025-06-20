@@ -42,8 +42,10 @@ class App < Sinatra::Application
     erb :register
   end
 
-  post '/signup' do
-    user = User.new(
+  post '/signup' do  
+      name = params[:name]
+      surname = params[:surname]
+      user = User.new(
       name: params[:name],
       surname: params[:surname],
       dni: params[:dni],
